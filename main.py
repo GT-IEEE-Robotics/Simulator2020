@@ -1,2 +1,4 @@
 # This code prints hello
-print("hello ammar")
+print("hello Alex")
+for i in range(10):
+	print ("lol")
