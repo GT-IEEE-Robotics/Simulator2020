@@ -5,7 +5,7 @@ Author:        Moungsung Im
 Last Modified: Binit on 9/23
 """
 
-from simulator import Buttons
+import Buttons
 
 
 class Field:

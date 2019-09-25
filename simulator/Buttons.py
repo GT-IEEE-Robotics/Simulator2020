@@ -6,6 +6,7 @@ Last Modified: Binit on 9/23
 """
 
 from enum import Enum
+from typing import Tuple
 
 ButtonState = Enum('ButtonState', 'unpressed pressed debouncing')
 
@@ -56,7 +57,7 @@ class Buttons:
         pass
 
 
-    def update_buttons(self, dt: float):
+    def update_buttons(self, dt: float) -> None:
         """Updates buttons' debounce timers
 
         For each maintained button, if a debounce timer is active,

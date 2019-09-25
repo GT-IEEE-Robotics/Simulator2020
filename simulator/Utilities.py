@@ -69,7 +69,7 @@ class Utilities:
         pass
 
     
-    def update_window_field_ratio(self, window_width_p: int, field_width_ft: float, window_height_p: int, field_height_ft: float):
+    def update_window_field_ratio(self, window_width_p: int, field_width_ft: float, window_height_p: int, field_height_ft: float) -> None:
         """Updates the simulator ratios
 
         The field has a real width and height given in feet.

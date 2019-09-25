@@ -7,8 +7,8 @@ Last Modified: Binit on 9/23
 
 import pygame
 
-from simulator import Field
-from simulator import Utilities
+import Field
+import Utilities
 
 
 class Game:
@@ -23,7 +23,7 @@ class Game:
         pass
 
 
-    def render_field(self):
+    def render_field(self) -> None:
         """Rendering the field to the window
 
         Renders field elements to the window.
@@ -31,7 +31,7 @@ class Game:
         pass
 
 
-    def run(self):
+    def run(self) -> None:
         """Maintains the game loop
 
         Coordinates other functions to execute here and
