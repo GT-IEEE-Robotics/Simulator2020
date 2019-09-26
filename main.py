@@ -3,7 +3,6 @@
 File:          main.py
 Author:        Binit Shah
 Last Modified: Binit on 9/23
-Test Comment
 """
 
 import simulator
