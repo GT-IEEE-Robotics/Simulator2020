@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-File:		   ButtonSim.py
+File:		   Buttons.py
 Author:		   Ammar Ratnani
 Last Modified: Ammar on 9/25
 """
