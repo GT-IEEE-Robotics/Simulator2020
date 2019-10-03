@@ -27,10 +27,7 @@ class Utilities:
         :param int window_height_p: window height in pixels
         :param int field_height_ft: field height in ft
         """
-        self.window_width_p = window_width_p
-        self.field_width_ft = field_width_ft
-        self.window_height_p = window_height_p
-        self.field_height_ft = field_height_ft
+        pass
 
     def dist_convert(self, a: float, convert_type: DistConvertType) -> float:
         """Convert distance measurements
@@ -45,31 +42,7 @@ class Utilities:
         >>> dist_convert(12.0, DistConvertType.inch2ft)
         1.0
         """
-        if(convert_type == DistConvertType.inch2ft):
-            return a/12.0
-        if(convert_type == DistConvertType.ft2inch):
-            return 12.0*a;
-        if(convert_type == DistConvertType.centi2meter):
-            return a/100.0;
-        if(convert_type == DistConvertType.meter2centi):
-            return 100.0*a;
-        if(convert_type == DistConvertType.inch2centi):
-            return 2.54*a;
-        if(convert_type == DistConvertType.centi2inch):
-            return a/2.54;
-        if(convert_type == DistConvertType.inch2meter):
-            return 2.54/100.0 * a;
-        if(convert_type == DistConvertType.meter2inch):
-            return 100.0*a/2.54;
-        if(convert_type == DistConvertType.ft2centi):
-            return 12.0*a/2.54;
-        if(convert_type == DistConvertType.centi2ft):
-           return 2.54/12.0*a;
-        if(convert_type == DistConvertType.ft2meter):
-            return a/3.281
-        if(convert_type == DistConvertType.meter2ft):
-            return 3.281*a;
-        return -1
+        pass
 
 
     def pixel_convert(self, a: float, is_width: bool, convert_type: PixelConvertType) -> float:
@@ -92,23 +65,7 @@ class Utilities:
         >>> dist_convert(100.0, DistConvertType.p2ft)
         4.32156
         """
-        if(convert_type == PixelConvertType.p2inch): 
-            return field_width_ft/window_width_p*a*12.0;
-        if(convert_type == PixelConvertType.inch2p):
-            return window_width_p/field_width_ft/12*a;
-        if(convert_type == PixelConvertType.p2ft):
-            return field_width_ft/window_width_p*a;
-        if(convert_type == PixelConvertType.ft2p):
-            return window_width_p/field_width_ft*a;
-        if(convert_type == PixelConvertType.p2centi):
-            return field_width_ft/window_width_p*a*12.0*2.54;
-        if(convert_type == PixelConvertType.centi2p):
-            return window_width_p/field_width_ft/12*a/2.54;
-        if(convert_type == PixelConvertType.p2meter):
-            return field_width_ft/window_width_p*a*12.0*2.54/100.0;
-        if(convert_type == PixelConvertType.meter2p):
-            return 100.0*window_width_p/field_width_ft/12*a/2.54;
-        return -1;
+        pass
 
     
     def update_window_field_ratio(self, window_width_p: int, field_width_ft: float, window_height_p: int, field_height_ft: float) -> None:
@@ -125,7 +82,4 @@ class Utilities:
         :param int window_height_p: window height in pixels
         :param int field_height_ft: field height in ft
         """
-        self.window_width_p = window_width_p
-        self.field_width_ft = field_width_ft
-        self.window_height_p = window_height_p
-        self.field_height_ft = field_height_ft
+        pass
