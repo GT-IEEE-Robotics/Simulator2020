@@ -18,41 +18,41 @@ class Field:
         the field, like the buttons.
         """
         
-        self.arenaWidth = 93
-        self.arenaHeight = 43
+        self.arena_width = 93
+        self.arena_height = 43
 
-        self.areanaThickness = 1/2
-        self.areanaNominalThickness = 15/32
+        self.arena_thickness = 1/2
+        self.arena_nominal_thickness = 15/32
 
         
 
-        self.wallWidth = 1.5
-        self.wallLength = 12
-        self.wallHeight = 3.5
+        self.wall_width = 1.5
+        self.wall_length = 12
+        self.wall_height = 3.5
 
-        self.lengthBetweenWalls = 10.75
-        self.lengthBetweenButtons = 3.00
+        self.length_between_walls = 10.75
+        self.length_between_buttons = 3.00
 
         #page 2 
-        self.centerXOfHole = 9.5
-        self.centerYOfHole = 8
+        self.centerX_of_hole = 9.5
+        self.centerY_of_hole = 8
 
-        self.startingSqaureEdgeX = 3.5 #from 4' walls
-        self.HoleEdgeX = 7.5
+        self.starting_sqaure_edgeX = 3.5 #from 4' walls
+        self.hole_edgeX = 7.5
 
-        self.startingSpaceHeight = 12
-        self.startingSpaceWidth = 12
+        self.starting_space_height = 12
+        self.starting_space_width = 12
 
-        self.dividingWallWidth =1 #nominal 0.75''
-        self.dividingWallHeight = 2 #nominal 1.5'' vertical
+        self.dividing_wall_width =1 #nominal 0.75''
+        self.dividing_wall_height = 2 #nominal 1.5'' vertical
 
-        self.firstDividingWallX = 19.25 #from inside of 4' walls
+        self.first_dividing_wallX = 19.25 #from inside of 4' walls
 
         #hole
-        self.stackingAreaWidth = 5
-        self.stackingAreaHeight = 5 
+        self.stacking_area_width = 5
+        self.stacking_area_height = 5 
 
         #pushbutton page 8              0 ~ 9 order
-        self.pushbuttonDiameter = 1
-        self.pushbuttonYcenter = 1.75
-        self.pushbuttonInset = 0.125
+        self.pushbutton_diameter = 1
+        self.pushbuttonY_center = 1.75
+        self.pushbutton_inset = 0.125
