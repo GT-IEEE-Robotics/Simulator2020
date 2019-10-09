@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc6ab594-ac85-4f29-a5d3-92615c4819a9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/tests/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/simulator/Pistons.py" beforeDir="false" afterPath="$PROJECT_DIR$/simulator/Pistons.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/pistons_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/pistons_test.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -14,15 +14,19 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/simulator/Pistons.py">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/tests/pistons_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/tests/pistons_test.py">
+        <entry file="file://$PROJECT_DIR$/simulator/Pistons.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
+            <state relative-caret-position="297">
+              <caret line="55" column="8" selection-start-line="55" selection-start-column="8" selection-end-line="55" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -35,8 +39,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/tests/pistons_test.py" />
         <option value="$PROJECT_DIR$/tests/piston_test.py" />
+        <option value="$PROJECT_DIR$/tests/pistons_test.py" />
+        <option value="$PROJECT_DIR$/simulator/Pistons.py" />
       </list>
     </option>
   </component>
@@ -86,6 +91,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -100,7 +106,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.piston_test">
+  <component name="RunManager" selected="Python.pistons_test">
     <configuration name="piston_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Simulator2020" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -145,8 +151,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.piston_test" />
         <item itemvalue="Python.pistons_test" />
+        <item itemvalue="Python.piston_test" />
       </list>
     </recent_temporary>
   </component>
@@ -172,7 +178,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32938388" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32938388" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -194,13 +200,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/simulator/Pistons.py">
+    <entry file="file://$PROJECT_DIR$/simulator/Buttons.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/pistons_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
+        <state relative-caret-position="323">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simulator/Pistons.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="55" column="8" selection-start-line="55" selection-start-column="8" selection-end-line="55" selection-end-column="8" />
         </state>
       </provider>
     </entry>
