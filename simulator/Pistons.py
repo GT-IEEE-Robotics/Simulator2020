@@ -51,10 +51,18 @@ class Pistons:
 	def piston_status(self):
 		"""This function will return the current status of all individual pistons as one of two states: 'on' or 'off'.
 
-		:param int pistonID: identifications code of an individual piston
-		:return updated statusList list"""
+		:return updated statusList list in a more readable format"""
 
-		return self.status_list
+		print_list=[]
+		for i in range(len(self.status_list)):
+			if self.status_list[i] == piston_state.off:
+				print_list.append('piston ' + str(i+1)+' off')
+			elif self.status_list[i] == piston_state.on:
+				print_list.append('piston ' + str(i+1) + ' on')
+
+		return print_list
+
+
 
 
 
