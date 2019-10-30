@@ -5,8 +5,10 @@ Author:		   Ammar Ratnani
 Last Modified: Ammar on 9/25
 """
 
-# Needed for typing syntax
-from typing import List
+import pybullet as p
+from typing import List # Needed for typing syntax
+
+from simulator.Utilities import Utilities
 
 
 class Button:
@@ -64,6 +66,13 @@ class Button:
         """
         return self.__str__()
 
+    def load_button_urdf(self, cwd, pos, orientation):
+        """Load the URDF of the button into the environment
+
+        The button URDF comes with its own dimensions and
+        textures, collidables.
+        """
+        self.button = p.loadURDF(Utilities.gen_urdf_path("button/button.urdf", cwd), basePosition=pos, baseOrientation=orientation, useFixedBase=True, globalScaling=0.001)
 
 
 class Buttons:
@@ -306,9 +315,11 @@ class Buttons:
             raise ValueError("`button_num` must be able to index arrays")
 
     def load_buttons_urdf(self, cwd):
-        """Load the URDF of the button into the environment
+        """Load 10 buttons into the environment
 
-        The button URDF comes with its own dimensions and
-        textures, collidables. We load it 10 times.
+        Have each button that we maintain add itself in the enviroment.
         """
-        # p.loadURDF(Utilities.gen_urdf_path("ArenaLayout/ArenaLayout.urdf", cwd), useFixedBase=True)
+        for i, b in enumerate(self.button_state):
+            position = [-1.19, -0.3423 + i / 13.1, 0.043]
+            orientation = [0, 0.707, 0, 0.707]
+            b.load_button_urdf(cwd, position, orientation)

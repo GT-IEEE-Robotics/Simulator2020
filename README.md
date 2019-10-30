@@ -2,10 +2,24 @@
 A simulator for the IEEE SoutheastCon 2020 Competition. It is to be used by the other teams to test their code before a working robot is made. Because of its design goal, this project will frequently reference the official SoutheastCon 2020 GitHub: [github.com/ncgadgetry/southeastcon2020](https://github.com/ncgadgetry/southeastcon2020).
 
 ## How to Run
-TODO
+
+```
+$ conda activate sim2020
+$ python main.py
+```
+
+If you don't have a conda environment, first install miniconda, then:
+```
+$ conda create --name hardware_sim PYTHON=3.7.1
+$ conda activate sim2020
+$ pip install numpy pybullet
+```
 
 ## How to Run Tests
-TODO
+
+```
+$ pytest tests
+```
 
 ## Directory
  * /simulator
@@ -14,7 +28,7 @@ TODO
    * Game - Maintains and coordinates the game loop
    * Utilies - Utility class to convert between units of measure
  * /test
-   * TODO
+   * test_buttons
 
 ## Components
 This project has no functional components for now.

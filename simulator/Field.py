@@ -7,7 +7,7 @@ Last Modified: Binit on 10/30
 
 import pybullet as p
 
-from simulator import Buttons
+from simulator.Buttons import Buttons
 from simulator.Utilities import Utilities
 
 class Field:
@@ -20,7 +20,7 @@ class Field:
         lengths. Also initializes simulated elements within
         the field, like the buttons.
         """
-        pass
+        self.buttons = Buttons()
 
     def load_field_urdf(self, cwd):
         """Load the URDF of the field into the environment
@@ -29,3 +29,4 @@ class Field:
         textures, collidables.
         """
         p.loadURDF(Utilities.gen_urdf_path("ArenaLayout/ArenaLayout.urdf", cwd), useFixedBase=True)
+        self.buttons.load_buttons_urdf(cwd)
