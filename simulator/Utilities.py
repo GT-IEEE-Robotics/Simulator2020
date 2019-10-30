@@ -6,6 +6,7 @@ Last Modified: Binit on 9/23
 """
 
 from enum import Enum
+import os
 
 DistConvertType = Enum('DistConvertType', 'inch2ft ft2inch centi2meter meter2centi inch2centi centi2inch inch2meter meter2inch ft2centi centi2ft ft2meter meter2ft')
 PixelConvertType = Enum('PixelConvertType', 'p2inch inch2p p2ft ft2p p2centi centi2p p2meter meter2p')
@@ -83,3 +84,6 @@ class Utilities:
         :param int field_height_ft: field height in ft
         """
         pass
+
+    def gen_urdf_path(urdf_fname, cwd):
+        return os.path.join(cwd, "data", urdf_fname)

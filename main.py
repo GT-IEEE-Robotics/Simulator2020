@@ -2,10 +2,11 @@
 """
 File:          main.py
 Author:        Binit Shah
-Last Modified: Binit on 9/23
+Last Modified: Binit on 10/30
 """
 
-import simulator
+from simulator.Game import Game
 
 if __name__ == "__main__":
-    pass
+    game = Game()
+    game.run()
