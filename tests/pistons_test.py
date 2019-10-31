@@ -17,5 +17,3 @@ def test_start():
 
     print(pistons.piston_status())
 
-
-test_start()
