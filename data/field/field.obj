@@ -1,7 +1,7 @@
-# Blender v2.79 (sub 0) OBJ File: 'ArenaLayout.blend'
+# Blender v2.79 (sub 0) OBJ File: 'field.blend'
 # www.blender.org
-mtllib ArenaLayout.mtl
-o ArenaLayout
+mtllib field.mtl
+o field
 v -0.558800 -0.063500 0.011906
 v -0.558800 -0.012700 0.012006
 v -0.558800 -0.012700 0.011906

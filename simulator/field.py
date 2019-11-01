@@ -7,8 +7,8 @@ Last Modified: Binit on 10/30
 
 import pybullet as p
 
-from simulator.Buttons import Buttons
-from simulator.Utilities import Utilities
+from simulator.buttons import Buttons
+from simulator.utilities import Utilities
 
 class Field:
     """The Field class maintains the state of the simulated elements within the field"""
@@ -28,5 +28,5 @@ class Field:
         The field URDF comes with its own dimensions and
         textures, collidables.
         """
-        p.loadURDF(Utilities.gen_urdf_path("ArenaLayout/ArenaLayout.urdf", cwd), useFixedBase=True)
+        self.field = p.loadURDF(Utilities.gen_urdf_path("field/field.urdf", cwd), useFixedBase=True)
         self.buttons.load_buttons_urdf(cwd)

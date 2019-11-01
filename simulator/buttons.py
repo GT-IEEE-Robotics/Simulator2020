@@ -8,7 +8,7 @@ Last Modified: Ammar on 9/25
 import pybullet as p
 from typing import List # Needed for typing syntax
 
-from simulator.Utilities import Utilities
+from simulator.utilities import Utilities
 
 
 class Button:
@@ -73,6 +73,7 @@ class Button:
         textures, collidables.
         """
         self.button = p.loadURDF(Utilities.gen_urdf_path("button/button.urdf", cwd), basePosition=pos, baseOrientation=orientation, useFixedBase=True, globalScaling=0.001)
+        p.setJointMotorControl2(self.button, 1, controlMode=p.POSITION_CONTROL, targetPosition=0.0, force=0.2, positionGain=0.8)
 
 
 class Buttons:
@@ -286,6 +287,7 @@ class Buttons:
                 digit = int(Buttons.PI[self.num_sequenced])
                 if not self.button_state[digit].button_state:
                     self.in_sequence = False
+                    self.num_sequenced += 1
                 else:
                     self.num_sequenced += 1
         # Case not in sequence

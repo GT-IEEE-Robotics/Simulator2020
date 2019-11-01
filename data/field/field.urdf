@@ -1,13 +1,13 @@
 <?xml version="1.0" ?>
-<robot name="ArenaLayout.urdf">
-    <link name="Arena">
+<robot name="field.urdf">
+    <link name="field_link">
         <!-- Import the visual from a textured .obj -->
         <visual>
             <!-- Center on the origin -->
             <origin rpy="0 0 0" xyz="0 0 0"/>
             
             <geometry>
-                <mesh filename="ArenaLayout.obj" scale="1 1 1"/>
+                <mesh filename="field.obj" scale="1 1 1"/>
             </geometry>
 
             <!-- For some reason textures don't load without this -->

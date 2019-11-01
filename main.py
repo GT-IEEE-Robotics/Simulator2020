@@ -5,7 +5,7 @@ Author:        Binit Shah
 Last Modified: Binit on 10/30
 """
 
-from simulator.Game import Game
+from simulator.game import Game
 
 if __name__ == "__main__":
     game = Game()

@@ -8,8 +8,8 @@ Last Modified: Binit on 10/30
 import os
 import pybullet as p
 
-from simulator.Field import Field
-from simulator.RacecarAgent import RacecarAgent
+from simulator.field import Field
+from simulator.racecar_agent import RacecarAgent
 
 
 class Game:
@@ -82,9 +82,7 @@ class Game:
 
     def monitor_buttons(self):
         for i, b in enumerate(self.field.buttons.button_state):
-            # print(f"button{i} @ position {p.getJointState(b.button, 1)[0]}")
             if p.getJointState(b.button, 1)[0] < -0.0038:
-                # print(f"button{i} pressed")
                 self.field.buttons.press_button(i)
             else:
                 self.field.buttons.unpress_button(i)
@@ -113,7 +111,7 @@ class Game:
             self.monitor_buttons()
             self.agent.update_racecar()
             self.field.buttons.update_buttons(1 / 240)
-            print(f"buttons state: in_sequence?={self.field.buttons.in_sequence} num_sequenced={self.field.buttons.num_sequenced} extra_sequenced={self.field.buttons.extra_not_sequenced}")
+            # print(f"buttons state: in_sequence?={self.field.buttons.in_sequence} num_sequenced={self.field.buttons.num_sequenced} extra_sequenced={self.field.buttons.extra_not_sequenced}")
 
             if (self.useRealTimeSim == 0):
                 p.stepSimulation()

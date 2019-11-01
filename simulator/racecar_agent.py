@@ -7,7 +7,7 @@ Last Modified: Binit on 10/30
 
 import pybullet as p
 
-from simulator.Utilities import Utilities
+from simulator.utilities import Utilities
 
 
 class RacecarAgent:
