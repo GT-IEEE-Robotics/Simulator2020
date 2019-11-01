@@ -1,0 +1,70 @@
+<?xml version="1.0" ?>
+<robot name="button">
+    <link name="push_link">
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 19.075"/>
+            <geometry>
+                <cylinder radius= "11.325" length ="9.7" />
+            </geometry>
+            <material name="push_material">
+                <color rgba="1 1 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 19.075"/>
+            <geometry>
+                <cylinder radius= "11.325" length ="9.7" />
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="ring_link">
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 16.65"/>
+            <geometry>
+                <cylinder radius= "16.65" length ="4.7" />
+            </geometry>
+            <material name="ring_material">
+                <color rgba="0.9 0.9 0.9 0.8"/>
+            </material>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 16.65"/>
+            <geometry>
+                <cylinder radius= "16.65" length ="4.7" />
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="base_link">
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+                <cylinder radius= "14" length ="28.6" />
+            </geometry>
+            <material name="base_material">
+                <color rgba="0.9 0.9 0.9 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+                <cylinder radius= "14" length ="28.6" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="base_link_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="ring_link"/>
+    </joint>
+
+    <joint name="ring_joint" type="prismatic">
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <parent link="ring_link"/>
+        <child link="push_link"/>
+        <axis xyz="0 0 1"/>
+	    <limit lower="-4.1" upper="0" effort="0.2" velocity="0.5" />
+    </joint>
+</robot>
