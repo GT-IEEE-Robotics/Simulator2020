@@ -28,6 +28,10 @@ class Button:
         The names of variables are also kept mostly the same, just changing 
         for style.
         """
+
+        # The actual model id for the button
+        self.button_model_id : int = 0
+
         # These are `int`s in the code, but they are treated as booleans
         self.button_state : bool = False
         """Represents the current state of the button."""
@@ -72,8 +76,10 @@ class Button:
         The button URDF comes with its own dimensions and
         textures, collidables.
         """
-        self.button = p.loadURDF(Utilities.gen_urdf_path("button/button.urdf", cwd), basePosition=pos, baseOrientation=orientation, useFixedBase=True, globalScaling=0.001)
-        p.setJointMotorControl2(self.button, 1, controlMode=p.POSITION_CONTROL, targetPosition=0.0, force=0.2, positionGain=0.8)
+        self.button_model_id = p.loadURDF(Utilities.gen_urdf_path("button/button.urdf", cwd), basePosition=pos, baseOrientation=orientation, useFixedBase=True)
+        
+        # Set the buttons to spring back into place
+        p.setJointMotorControl2(self.button_model_id, 1, controlMode=p.POSITION_CONTROL, targetPosition=0.0, force=0.2, positionGain=0.8)
 
 
 class Buttons:
@@ -322,6 +328,6 @@ class Buttons:
         Have each button that we maintain add itself in the enviroment.
         """
         for i, b in enumerate(self.button_state):
-            position = [-1.19, -0.3423 + i / 13.1, 0.043]
+            position = [-1.1954, -0.3423 + i / 13.1, 0.043]
             orientation = [0, 0.707, 0, 0.707]
             b.load_button_urdf(cwd, position, orientation)

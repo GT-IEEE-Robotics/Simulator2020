@@ -82,7 +82,7 @@ class Game:
 
     def monitor_buttons(self):
         for i, b in enumerate(self.field.buttons.button_state):
-            if p.getJointState(b.button, 1)[0] < -0.0038:
+            if p.getJointState(b.button_model_id, 1)[0] < -0.0038:
                 self.field.buttons.press_button(i)
             else:
                 self.field.buttons.unpress_button(i)

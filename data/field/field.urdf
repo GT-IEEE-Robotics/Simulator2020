@@ -1,6 +1,12 @@
 <?xml version="1.0" ?>
 <robot name="field.urdf">
     <link name="field_link">
+        <!-- Make it have infinite mass. It shouldn't move -->
+        <inertial>
+            <mass value="1e10"/>
+            <inertia ixx="1e10" ixy="1e10" ixz="1e10" iyy="1e10" iyz="1e10" izz="1e10"/>
+        </inertial>
+
         <!-- Import the visual from a textured .obj -->
         <visual>
             <!-- Center on the origin -->
