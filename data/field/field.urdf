@@ -21,7 +21,7 @@
                 <color rgba="1 1 1 1"/>
             </material>
         </visual>
-        
+
         <!-- Back half of the base -->
         <collision>
             <origin rpy="0 0 0" xyz="-0.1651 0 0.005953"/>
@@ -80,7 +80,7 @@
             </geometry>
         </collision>
 
-        <!-- Front left Bins-->
+        <!-- Front left bins-->
         <collision>
             <origin rpy="0 0 0" xyz="0.682625 0.4191 0.03096"/>
             <geometry>
@@ -120,7 +120,7 @@
             </geometry>
         </collision>
 
-        <!-- Front right Bins-->
+        <!-- Front right bins-->
         <collision>
             <origin rpy="0 0 0" xyz="0.682625 -0.4191 0.03096"/>
             <geometry>

@@ -74,7 +74,7 @@
     <parent link="chassis"/>
     <child link="left_rear_wheel"/>
     <axis xyz="0 0 -1"/>
-    <limit effort="10" velocity="100"/>
+    <limit effort="10000" velocity="100"/>
   </joint>
   <transmission name="left_rear_wheel_transmission" type="SimpleTransmission">
     <type>transmission_interface/SimpleTransmission</type>
@@ -112,7 +112,7 @@
     <parent link="chassis"/>
     <child link="right_rear_wheel"/>
     <axis xyz="0 0 -1"/>
-    <limit effort="10" velocity="100"/>
+    <limit effort="10000" velocity="100"/>
   </joint>
   <transmission name="right_rear_wheel_transmission" type="SimpleTransmission">
     <type>transmission_interface/SimpleTransmission</type>
@@ -144,7 +144,7 @@
     <parent link="chassis"/>
     <child link="left_steering_hinge"/>
     <axis xyz="-1 0 0"/>
-    <limit effort="10" lower="-1.0" upper="1.0" velocity="100"/>
+    <limit effort="10000" lower="-1.0" upper="1.0" velocity="100"/>
   </joint>
   <transmission name="left_steering_hinge_transmission" type="SimpleTransmission">
     <type>transmission_interface/SimpleTransmission</type>
@@ -176,7 +176,7 @@
     <parent link="chassis"/>
     <child link="right_steering_hinge"/>
     <axis xyz="-1 0 0"/>
-    <limit effort="10" lower="-1.0" upper="1.0" velocity="100"/>
+    <limit effort="10000" lower="-1.0" upper="1.0" velocity="100"/>
   </joint>
   <transmission name="right_steering_hinge_transmission" type="SimpleTransmission">
     <type>transmission_interface/SimpleTransmission</type>
