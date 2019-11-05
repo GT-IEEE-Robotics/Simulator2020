@@ -7,8 +7,8 @@ Last Modified: Binit on 10/30
 
 import pybullet as p
 
-from simulator.buttons import Buttons
 from simulator.utilities import Utilities
+from simulator.field_components.buttons import Buttons
 
 class Field:
     """The Field class maintains the state of the simulated elements within the field"""
