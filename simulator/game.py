@@ -82,19 +82,11 @@ class Game:
             self.agent.normalizeSteering()
 
     def monitor_buttons(self):
-        for i, b in enumerate(self.field.buttons.button_state):
-            # Handle button presses on treshold
-            if p.getJointState(b.button_model_id, 1)[0] < -0.0038:
+        for i,x in enumerate(p.getJointStates(self.field.field_model_id, range(1, 21, 2))):
+            if x[0] < -.0038:
                 self.field.buttons.press_button(i)
             else:
                 self.field.buttons.unpress_button(i)
-            # Change color if lit
-            if b.lit:
-                # Set color to yellow
-                p.changeVisualShape(b.button_model_id, 1, rgbaColor=[1, 1, 0, 1])
-            else:
-                # White
-                p.changeVisualShape(b.button_model_id, 1, rgbaColor=[1, 1, 1, 1])
 
     def run(self):
         """Maintains the game loop

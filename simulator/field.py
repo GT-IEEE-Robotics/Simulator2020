@@ -68,9 +68,6 @@ class Field:
         textures, collidables.
         """
         self.field_model_id = p.loadURDF(Utilities.gen_urdf_path("field/field.urdf", cwd), useFixedBase=True)
-        self.buttons.load_buttons_urdf(cwd)
 
-        # Also disable collisions between the field and the buttons
-        for b in self.buttons.button_state:
-            for i in range(-1,2):
-                p.setCollisionFilterPair(self.field_model_id, b.button_model_id, -1, i, 0)
+        for i in range(1, 21, 2):
+            p.setJointMotorControl2(self.field_model_id, i, controlMode=p.POSITION_CONTROL, targetPosition=0.0, force=0.2, positionGain=0.8)
