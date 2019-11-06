@@ -6,6 +6,7 @@ Last Modified: Binit on 10/30
 """
 
 import os
+import time
 import pybullet as p
 
 from simulator.field import Field
@@ -82,25 +83,28 @@ class Game:
 
     def monitor_buttons(self):
         for i, b in enumerate(self.field.buttons.button_state):
+            # Handle button presses on treshold
             if p.getJointState(b.button_model_id, 1)[0] < -0.0038:
                 self.field.buttons.press_button(i)
             else:
                 self.field.buttons.unpress_button(i)
-        
-        # if p.getJointState(self.button1, 1)[0] < -0.038:
-        #     # print("pressed")
-        #     p.changeVisualShape(self.button1, 1, rgbaColor=[1, 1, 1, 1])
-
-        # else:
-        #     # print('not pressed')
-        #     p.changeVisualShape(self.button1, 1, rgbaColor=[1, 1, 1, 0.8])
-
+            # Change color if lit
+            if b.lit:
+                # Set color to yellow
+                p.changeVisualShape(b.button_model_id, 1, rgbaColor=[1, 1, 0, 1])
+            else:
+                # White
+                p.changeVisualShape(b.button_model_id, 1, rgbaColor=[1, 1, 1, 1])
 
     def run(self):
         """Maintains the game loop
         Coordinates other functions to execute here and
         tracks the delta time between each game loop.
         """
+        # For time-based things like buttons
+        # Needed because non-constant simulation rate
+        old_time = time.time()
+
         self.load_statics()
         self.load_agents()
         self.load_ui()
@@ -110,8 +114,13 @@ class Game:
             self.process_keyboard_events()
             self.monitor_buttons()
             self.agent.update_racecar()
-            self.field.buttons.update_buttons(1 / 240)
-            # print(f"buttons state: in_sequence?={self.field.buttons.in_sequence} num_sequenced={self.field.buttons.num_sequenced} extra_sequenced={self.field.buttons.extra_not_sequenced}")
+            self.field.buttons.update_buttons(time.time() - old_time)
+            
+            print(f"delta t: {time.time()-old_time}")
+            print(f"buttons state: in_sequence?={self.field.buttons.in_sequence} num_sequenced={self.field.buttons.num_sequenced} extra_sequenced={self.field.buttons.extra_not_sequenced}")
+            print()
 
             if (self.useRealTimeSim == 0):
                 p.stepSimulation()
+
+            old_time = time.time()

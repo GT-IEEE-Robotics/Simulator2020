@@ -45,6 +45,12 @@ class Button:
         self.last_debounce_time : float = 0.0 # in seconds
         """Like the code, stores the last time the button changed its state."""
 
+        self.lit : bool = False
+        """
+        Added in later to check if a button is lit. Handled implicitly in the 
+        code but necessarily handled explicitly for the simulation.
+        """
+
 
     def __str__(self) -> str:
         """Returns a nice string representation of this button.
@@ -59,7 +65,8 @@ class Button:
             str(self.button_state) + ', ' + \
             str(self.last_button_state) + ', ' + \
             str(self.reading) + ', ' + \
-            str(self.last_debounce_time) + ')'
+            str(self.last_debounce_time) + \
+            str(self.lit) + ')'
 
 
     def __repr__(self) -> str:
@@ -92,6 +99,9 @@ class Buttons:
 
     """The time delay in seconds to verify for debouncing."""
     DEBOUNCE_DELAY : float = .025 # 25 milliseconds
+
+    """How long to flash LEDs for on a wrong push"""
+    FLASH_INTERVAL : float = .050 # 50 milliseconds
 
     """The first 2000 digits of PI in a string."""
     PI : str =  '31415926535897932384626433832795028841971693993751' + \
@@ -158,6 +168,15 @@ class Buttons:
         # Also store the time of the simulation in seconds
         self.time : float = 0.0
 
+        # Also store the flash timeout due to changing requirements
+        self.flash_timeout : float = 0.0
+
+        # Rest of this is startup logic
+        
+        # Set the three button to lit
+        # We don't really care about the rest of `startCompetition()`
+        self.button_state[3].lit = True
+
 
     def __str__(self) -> str:
         """Returns a string representation of the current game state.
@@ -175,6 +194,7 @@ class Buttons:
             str(self.extra_not_sequenced) + ', ' + \
             str(self.in_sequence) + ', ' + \
             str(self.time) + ', ' + \
+            str(self.flash_timeout) + ', ' + \
             str(self.button_state) + ')'
 
 
@@ -259,6 +279,13 @@ class Buttons:
         # How many are pressed
         num_pressed : int = 0
 
+        # Logic in the first half of `loop()`
+        # Check for flashing LEDs
+        if self.flash_timeout != 0.0 and self.time > self.flash_timeout:
+            # `setAllLEDs(false)`
+            for b in self.button_state:
+                b.lit = False
+
         # `debounceButtons()`
         # i -> digit; b -> buttonState[digit]
         for i,b in enumerate(self.button_state):
@@ -280,7 +307,7 @@ class Buttons:
             # Save the reading
             b.last_button_state = b.reading
 
-        # Logic in `loop()`
+        # Logic in the second half of `loop()`
         if num_pressed == 0:
             # Bad style, but this is what the code does
             pass
@@ -289,17 +316,33 @@ class Buttons:
             # We aren't sequencing if more than one pressed
             if num_pressed > 1:
                 self.in_sequence = False
+                # `flashAllLEDs()`
+                for b in self.button_state:
+                    b.lit = True
+                self.flash_timeout = self.time + Buttons.FLASH_INTERVAL
             elif new_press:
                 digit = int(Buttons.PI[self.num_sequenced])
                 if not self.button_state[digit].button_state:
                     self.in_sequence = False
-                    self.num_sequenced += 1
+                    self.extra_not_sequenced += 1
+                    # `flashAllLEDs()`
+                    for b in self.button_state:
+                        b.lit = True
+                    self.flash_timeout = self.time + Buttons.FLASH_INTERVAL
                 else:
+                    self.button_state[digit].lit = False
                     self.num_sequenced += 1
+                    # Get the new digit and light it up
+                    digit = int(Buttons.PI[self.num_sequenced])
+                    self.button_state[digit].lit = True
         # Case not in sequence
         else:
             if new_press:
                 self.extra_not_sequenced += 1
+                # `flashAllLEDs()`
+                for b in self.button_state:
+                    b.lit = True
+                self.flash_timeout = self.time + Buttons.FLASH_INTERVAL
 
 
     def button_status(self, button_num: int) -> Button:
@@ -328,6 +371,9 @@ class Buttons:
         Have each button that we maintain add itself in the enviroment.
         """
         for i, b in enumerate(self.button_state):
+            # Position calculated from the rules
             position = [-1.1954, -0.3423 + i / 13.1, 0.043]
+            # I don't know orientation because its a quaternion
             orientation = [0, 0.707, 0, 0.707]
+
             b.load_button_urdf(cwd, position, orientation)
