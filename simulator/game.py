@@ -82,7 +82,7 @@ class Game:
     def monitor_buttons(self):
         # Store the return values for readability
         buttonStates = p.getJointStates(
-                            self.field.field_model_id,
+                            self.field.model_id,
                             [b.joint_id for b in self.field.buttons])
 
         # Get every button and press it if needed
@@ -91,6 +91,10 @@ class Game:
                 self.field.buttons.press_button(i)
             else:
                 self.field.buttons.unpress_button(i)
+
+        # We don't have logic changing the button color
+        # Too costly in terms of time
+        # Can easily be implemented because logic there
 
     def run(self):
         """Maintains the game loop
