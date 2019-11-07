@@ -6,7 +6,7 @@ Last Modified: Ammar on 9/25
 """
 
 import pybullet as p
-from typing import List # Needed for typing syntax
+from typing import List, Iterator # Needed for typing syntax
 
 from simulator.utilities import Utilities
 
@@ -29,8 +29,9 @@ class Button:
         for style.
         """
 
-        # The actual model id for the button
-        self.button_model_id : int = 0
+        # The joint index for the button
+        # Must be assigned on field creation
+        self.joint_id : int = -1
 
         # These are `int`s in the code, but they are treated as booleans
         self.button_state : bool = False
@@ -76,17 +77,6 @@ class Button:
         :return: `self.__str__()`
         """
         return self.__str__()
-
-    def load_button_urdf(self, cwd, pos, orientation):
-        """Load the URDF of the button into the environment
-
-        The button URDF comes with its own dimensions and
-        textures, collidables.
-        """
-        self.button_model_id = p.loadURDF(Utilities.gen_urdf_path("button/button.urdf", cwd), basePosition=pos, baseOrientation=orientation, useFixedBase=True)
-        
-        # Set the buttons to spring back into place
-        p.setJointMotorControl2(self.button_model_id, 1, controlMode=p.POSITION_CONTROL, targetPosition=0.0, force=0.2, positionGain=0.8)
 
 
 class Buttons:
@@ -205,6 +195,14 @@ class Buttons:
         :return: `self.__str__()`
         """
         return self.__str__()
+
+
+    def __iter__(self) -> Iterator[Button]:
+        """Allow iterating over this class
+
+        Equivalent to iterating over button_state.
+        """
+        return iter(self.button_state)
 
 
     def press_button(self, button_num: int) -> Button:
@@ -365,15 +363,12 @@ class Buttons:
         except ValueError:
             raise ValueError("`button_num` must be able to index arrays")
 
-    def load_buttons_urdf(self, cwd):
-        """Load 10 buttons into the environment
 
-        Have each button that we maintain add itself in the enviroment.
+    def populate_joint_ids(self, jids : List[int]) -> None:
+        """Populates the joint IDs of the buttons we have.
+
+        Takes in an array of joint IDs to populate with. Done like this as it
+        depends on the field we are loading.
         """
-        for i, b in enumerate(self.button_state):
-            # Position calculated from the rules
-            position = [-1.1954, -0.3423 + i / 13.1, 0.043]
-            # I don't know orientation because its a quaternion
-            orientation = [0, 0.707, 0, 0.707]
-
-            b.load_button_urdf(cwd, position, orientation)
+        for i,b in enumerate(self.button_state):
+            b.joint_id = jids[i]

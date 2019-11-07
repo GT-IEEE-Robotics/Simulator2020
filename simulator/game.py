@@ -28,11 +28,9 @@ class Game:
 
         p.resetSimulation()
         p.setGravity(0, 0, -9.8)
-        self.useRealTimeSim = 1
 
         #for video recording (works best on Mac and Linux, not well on Windows)
         #p.startStateLogging(p.STATE_LOGGING_VIDEO_MP4, "racecar.mp4")
-        p.setRealTimeSimulation(self.useRealTimeSim)  # either this
 
         self.agent = RacecarAgent()
         self.field = Field()
@@ -82,7 +80,13 @@ class Game:
             self.agent.normalizeSteering()
 
     def monitor_buttons(self):
-        for i,x in enumerate(p.getJointStates(self.field.field_model_id, range(1, 21, 2))):
+        # Store the return values for readability
+        buttonStates = p.getJointStates(
+                            self.field.field_model_id,
+                            [b.joint_id for b in self.field.buttons])
+
+        # Get every button and press it if needed
+        for i,x in enumerate(buttonStates):
             if x[0] < -.0038:
                 self.field.buttons.press_button(i)
             else:
@@ -93,10 +97,6 @@ class Game:
         Coordinates other functions to execute here and
         tracks the delta time between each game loop.
         """
-        # For time-based things like buttons
-        # Needed because non-constant simulation rate
-        old_time = time.time()
-
         self.load_statics()
         self.load_agents()
         self.load_ui()
@@ -106,13 +106,14 @@ class Game:
             self.process_keyboard_events()
             self.monitor_buttons()
             self.agent.update_racecar()
-            self.field.buttons.update_buttons(time.time() - old_time)
-            
-            print(f"delta t: {time.time()-old_time}")
+            # See below for magic number rationale
+            self.field.buttons.update_buttons(1/240)
+
+            # Debugging: safe to remove
             print(f"buttons state: in_sequence?={self.field.buttons.in_sequence} num_sequenced={self.field.buttons.num_sequenced} extra_sequenced={self.field.buttons.extra_not_sequenced}")
-            print()
 
-            if (self.useRealTimeSim == 0):
-                p.stepSimulation()
-
-            old_time = time.time()
+            # Steps time by 1/240 seconds
+            p.stepSimulation()
+            # Sleep for slightly less time to make it seem realitme
+            # Fudge factor experimentally determined
+            time.sleep(1/240 - .0002)
