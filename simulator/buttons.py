@@ -6,7 +6,7 @@ Last Modified: Ammar on 9/25
 """
 
 import pybullet as p
-from typing import List # Needed for typing syntax
+from typing import List, Iterator # Needed for typing syntax
 
 from simulator.utilities import Utilities
 
@@ -28,6 +28,11 @@ class Button:
         The names of variables are also kept mostly the same, just changing 
         for style.
         """
+
+        # The joint index for the button
+        # Must be assigned on field creation
+        self.joint_id : int = -1
+
         # These are `int`s in the code, but they are treated as booleans
         self.button_state : bool = False
         """Represents the current state of the button."""
@@ -40,6 +45,12 @@ class Button:
 
         self.last_debounce_time : float = 0.0 # in seconds
         """Like the code, stores the last time the button changed its state."""
+
+        self.lit : bool = False
+        """
+        Added in later to check if a button is lit. Handled implicitly in the 
+        code but necessarily handled explicitly for the simulation.
+        """
 
 
     def __str__(self) -> str:
@@ -55,7 +66,8 @@ class Button:
             str(self.button_state) + ', ' + \
             str(self.last_button_state) + ', ' + \
             str(self.reading) + ', ' + \
-            str(self.last_debounce_time) + ')'
+            str(self.last_debounce_time) + \
+            str(self.lit) + ')'
 
 
     def __repr__(self) -> str:
@@ -65,15 +77,6 @@ class Button:
         :return: `self.__str__()`
         """
         return self.__str__()
-
-    def load_button_urdf(self, cwd, pos, orientation):
-        """Load the URDF of the button into the environment
-
-        The button URDF comes with its own dimensions and
-        textures, collidables.
-        """
-        self.button = p.loadURDF(Utilities.gen_urdf_path("button/button.urdf", cwd), basePosition=pos, baseOrientation=orientation, useFixedBase=True, globalScaling=0.001)
-        p.setJointMotorControl2(self.button, 1, controlMode=p.POSITION_CONTROL, targetPosition=0.0, force=0.2, positionGain=0.8)
 
 
 class Buttons:
@@ -86,6 +89,9 @@ class Buttons:
 
     """The time delay in seconds to verify for debouncing."""
     DEBOUNCE_DELAY : float = .025 # 25 milliseconds
+
+    """How long to flash LEDs for on a wrong push"""
+    FLASH_INTERVAL : float = .050 # 50 milliseconds
 
     """The first 2000 digits of PI in a string."""
     PI : str =  '31415926535897932384626433832795028841971693993751' + \
@@ -152,6 +158,15 @@ class Buttons:
         # Also store the time of the simulation in seconds
         self.time : float = 0.0
 
+        # Also store the flash timeout due to changing requirements
+        self.flash_timeout : float = 0.0
+
+        # Rest of this is startup logic
+        
+        # Set the three button to lit
+        # We don't really care about the rest of `startCompetition()`
+        self.button_state[3].lit = True
+
 
     def __str__(self) -> str:
         """Returns a string representation of the current game state.
@@ -169,6 +184,7 @@ class Buttons:
             str(self.extra_not_sequenced) + ', ' + \
             str(self.in_sequence) + ', ' + \
             str(self.time) + ', ' + \
+            str(self.flash_timeout) + ', ' + \
             str(self.button_state) + ')'
 
 
@@ -179,6 +195,14 @@ class Buttons:
         :return: `self.__str__()`
         """
         return self.__str__()
+
+
+    def __iter__(self) -> Iterator[Button]:
+        """Allow iterating over this class
+
+        Equivalent to iterating over button_state.
+        """
+        return iter(self.button_state)
 
 
     def press_button(self, button_num: int) -> Button:
@@ -253,6 +277,13 @@ class Buttons:
         # How many are pressed
         num_pressed : int = 0
 
+        # Logic in the first half of `loop()`
+        # Check for flashing LEDs
+        if self.flash_timeout != 0.0 and self.time > self.flash_timeout:
+            # `setAllLEDs(false)`
+            for b in self.button_state:
+                b.lit = False
+
         # `debounceButtons()`
         # i -> digit; b -> buttonState[digit]
         for i,b in enumerate(self.button_state):
@@ -274,7 +305,7 @@ class Buttons:
             # Save the reading
             b.last_button_state = b.reading
 
-        # Logic in `loop()`
+        # Logic in the second half of `loop()`
         if num_pressed == 0:
             # Bad style, but this is what the code does
             pass
@@ -283,17 +314,33 @@ class Buttons:
             # We aren't sequencing if more than one pressed
             if num_pressed > 1:
                 self.in_sequence = False
+                # `flashAllLEDs()`
+                for b in self.button_state:
+                    b.lit = True
+                self.flash_timeout = self.time + Buttons.FLASH_INTERVAL
             elif new_press:
                 digit = int(Buttons.PI[self.num_sequenced])
                 if not self.button_state[digit].button_state:
                     self.in_sequence = False
-                    self.num_sequenced += 1
+                    self.extra_not_sequenced += 1
+                    # `flashAllLEDs()`
+                    for b in self.button_state:
+                        b.lit = True
+                    self.flash_timeout = self.time + Buttons.FLASH_INTERVAL
                 else:
+                    self.button_state[digit].lit = False
                     self.num_sequenced += 1
+                    # Get the new digit and light it up
+                    digit = int(Buttons.PI[self.num_sequenced])
+                    self.button_state[digit].lit = True
         # Case not in sequence
         else:
             if new_press:
                 self.extra_not_sequenced += 1
+                # `flashAllLEDs()`
+                for b in self.button_state:
+                    b.lit = True
+                self.flash_timeout = self.time + Buttons.FLASH_INTERVAL
 
 
     def button_status(self, button_num: int) -> Button:
@@ -316,12 +363,12 @@ class Buttons:
         except ValueError:
             raise ValueError("`button_num` must be able to index arrays")
 
-    def load_buttons_urdf(self, cwd):
-        """Load 10 buttons into the environment
 
-        Have each button that we maintain add itself in the enviroment.
+    def populate_joint_ids(self, jids : List[int]) -> None:
+        """Populates the joint IDs of the buttons we have.
+
+        Takes in an array of joint IDs to populate with. Done like this as it
+        depends on the field we are loading.
         """
-        for i, b in enumerate(self.button_state):
-            position = [-1.19, -0.3423 + i / 13.1, 0.043]
-            orientation = [0, 0.707, 0, 0.707]
-            b.load_button_urdf(cwd, position, orientation)
+        for i,b in enumerate(self.button_state):
+            b.joint_id = jids[i]

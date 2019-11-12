@@ -2,45 +2,56 @@
 <robot name="button">
     <link name="push_link">
         <visual>
-            <origin rpy="0 0 0" xyz="0 0 19.075"/>
+            <origin rpy="0 0 0" xyz="0 0 0.019075"/>
             <geometry>
-                <cylinder radius= "11.325" length ="9.7" />
+                <cylinder radius= "0.011325" length ="0.0097" />
             </geometry>
             <material name="push_material">
                 <color rgba="1 1 1 1"/>
             </material>
         </visual>
         <collision>
-            <origin rpy="0 0 0" xyz="0 0 19.075"/>
+            <origin rpy="0 0 0" xyz="0 0 0.019075"/>
             <geometry>
-                <cylinder radius= "11.325" length ="9.7" />
+                <cylinder radius= "0.011325" length ="0.0097" />
             </geometry>
         </collision>
+        
+        <!-- Guess reasonable values for all the links -->
+        <inertial>
+            <mass value=".005"/>
+            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+        </inertial>
     </link>
 
     <link name="ring_link">
         <visual>
-            <origin rpy="0 0 0" xyz="0 0 16.65"/>
+            <origin rpy="0 0 0" xyz="0 0 0.01665"/>
             <geometry>
-                <cylinder radius= "16.65" length ="4.7" />
+                <cylinder radius= "0.01665" length ="0.0047" />
             </geometry>
             <material name="ring_material">
                 <color rgba="0.9 0.9 0.9 0.8"/>
             </material>
         </visual>
         <collision>
-            <origin rpy="0 0 0" xyz="0 0 16.65"/>
+            <origin rpy="0 0 0" xyz="0 0 0.01665"/>
             <geometry>
-                <cylinder radius= "16.65" length ="4.7" />
+                <cylinder radius= "0.01665" length ="0.0047" />
             </geometry>
         </collision>
+        
+        <inertial>
+            <mass value=".005"/>
+            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+        </inertial>
     </link>
 
     <link name="base_link">
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <cylinder radius= "14" length ="28.6" />
+                <cylinder radius= "0.014" length ="0.0286" />
             </geometry>
             <material name="base_material">
                 <color rgba="0.9 0.9 0.9 1"/>
@@ -49,9 +60,14 @@
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <cylinder radius= "14" length ="28.6" />
+                <cylinder radius= "0.014" length ="0.0286" />
             </geometry>
         </collision>
+        
+        <inertial>
+            <mass value=".005"/>
+            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+        </inertial>
     </link>
 
     <joint name="base_link_joint" type="fixed">
@@ -65,6 +81,6 @@
         <parent link="ring_link"/>
         <child link="push_link"/>
         <axis xyz="0 0 1"/>
-	    <limit lower="-4.1" upper="0" effort="0.2" velocity="0.5" />
+        <limit lower="-0.0041" upper="0" effort="0.2" velocity="0.5" />
     </joint>
 </robot>

@@ -6,6 +6,7 @@ Last Modified: Binit on 10/30
 """
 
 import os
+import time
 import pybullet as p
 
 from simulator.field import Field
@@ -27,11 +28,9 @@ class Game:
 
         p.resetSimulation()
         p.setGravity(0, 0, -9.8)
-        self.useRealTimeSim = 1
 
         #for video recording (works best on Mac and Linux, not well on Windows)
         #p.startStateLogging(p.STATE_LOGGING_VIDEO_MP4, "racecar.mp4")
-        p.setRealTimeSimulation(self.useRealTimeSim)  # either this
 
         self.agent = RacecarAgent()
         self.field = Field()
@@ -81,20 +80,21 @@ class Game:
             self.agent.normalizeSteering()
 
     def monitor_buttons(self):
-        for i, b in enumerate(self.field.buttons.button_state):
-            if p.getJointState(b.button, 1)[0] < -0.0038:
+        # Store the return values for readability
+        buttonStates = p.getJointStates(
+                            self.field.model_id,
+                            [b.joint_id for b in self.field.buttons])
+
+        # Get every button and press it if needed
+        for i,x in enumerate(buttonStates):
+            if x[0] < -.0038:
                 self.field.buttons.press_button(i)
             else:
                 self.field.buttons.unpress_button(i)
-        
-        # if p.getJointState(self.button1, 1)[0] < -0.038:
-        #     # print("pressed")
-        #     p.changeVisualShape(self.button1, 1, rgbaColor=[1, 1, 1, 1])
 
-        # else:
-        #     # print('not pressed')
-        #     p.changeVisualShape(self.button1, 1, rgbaColor=[1, 1, 1, 0.8])
-
+        # We don't have logic changing the button color
+        # Too costly in terms of time
+        # Can easily be implemented because logic there
 
     def run(self):
         """Maintains the game loop
@@ -110,8 +110,14 @@ class Game:
             self.process_keyboard_events()
             self.monitor_buttons()
             self.agent.update_racecar()
-            self.field.buttons.update_buttons(1 / 240)
-            # print(f"buttons state: in_sequence?={self.field.buttons.in_sequence} num_sequenced={self.field.buttons.num_sequenced} extra_sequenced={self.field.buttons.extra_not_sequenced}")
+            # See below for magic number rationale
+            self.field.buttons.update_buttons(1/240)
 
-            if (self.useRealTimeSim == 0):
-                p.stepSimulation()
+            # Debugging: safe to remove
+            print(f"buttons state: in_sequence?={self.field.buttons.in_sequence} num_sequenced={self.field.buttons.num_sequenced} extra_sequenced={self.field.buttons.extra_not_sequenced}")
+
+            # Steps time by 1/240 seconds
+            p.stepSimulation()
+            # Sleep for slightly less time to make it seem realitme
+            # Fudge factor experimentally determined
+            time.sleep(1/240 - .0002)
