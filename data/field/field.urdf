@@ -1,694 +1,747 @@
-<?xml version="1.0" ?>
-<robot name="field.urdf">
-    <link name="field_link">
-        <!-- Make it have infinite mass. It shouldn't move -->
-        <inertial>
-            <mass value="1e10"/>
-            <inertia ixx="1e10" ixy="1e10" ixz="1e10" iyy="1e10" iyz="1e10" izz="1e10"/>
-        </inertial>
-
-        <!-- Import the visual from a textured .obj -->
-        <visual>
-            <!-- Center on the origin -->
-            <origin rpy="0 0 0" xyz="0 0 0"/>
-            
-            <geometry>
-                <mesh filename="field.obj" scale="1 1 1"/>
-            </geometry>
-
-            <!-- For some reason textures don't load without this -->
-            <material name="white">
-                <color rgba="1 1 1 1"/>
-            </material>
-        </visual>
-
-        <!-- Back half of the base -->
-        <collision>
-            <origin rpy="0 0 0" xyz="-0.1651 0 0.005953"/>
-            <geometry>
-                <box size="2.1082 1.2192 0.01191"/>
-            </geometry>
-        </collision>
-
-        <!-- Sides of the base -->
-        <collision>
-            <origin rpy="0 0 0" xyz="0.9398 0.3302 0.005953"/>
-            <geometry>
-                <box size="0.1016 0.5588 0.01191"/>
-            </geometry>
-        </collision>
-        <collision>
-            <origin rpy="0 0 0" xyz="0.9398 -0.3302 0.005953"/>
-            <geometry>
-                <box size="0.1016 0.5588 0.01191"/>
-            </geometry>
-        </collision>
-
-        <!-- Front of the base -->
-        <collision>
-            <origin rpy="0 0 0" xyz="1.1049 0 0.005953"/>
-            <geometry>
-                <box size="0.2286 1.2192 0.01191"/>
-            </geometry>
-        </collision>
-
-        <!-- Front and back walls -->
-        <collision>
-            <origin rpy="0 0 0" xyz="1.20015 0 0.05636"/>
-            <geometry>
-                <box size="0.0381 1.2192 0.0889"/>
-            </geometry>
-        </collision>
-        <collision>
-            <origin rpy="0 0 0" xyz="-1.20015 0 0.05636"/>
-            <geometry>
-                <box size="0.0381 1.2192 0.0889"/>
-            </geometry>
-        </collision>
-
-        <!-- Side walls -->
-        <collision>
-            <origin rpy="0 0 0" xyz="0 0.59055 0.05636"/>
-            <geometry>
-                <box size="2.4384 0.0381 0.0889"/>
-            </geometry>
-        </collision>
-        <collision>
-            <origin rpy="0 0 0" xyz="0 -0.59055 0.05636"/>
-            <geometry>
-                <box size="2.4384 0.0381 0.0889"/>
-            </geometry>
-        </collision>
-
-        <!-- Front left bins-->
-        <collision>
-            <origin rpy="0 0 0" xyz="0.682625 0.4191 0.03096"/>
-            <geometry>
-                <box size="0.01905 0.3048 0.0381"/>
-            </geometry>
-        </collision>
-        <collision>
-            <origin rpy="0 0 0" xyz="0.409575 0.4191 0.03096"/>
-            <geometry>
-                <box size="0.01905 0.3048 0.0381"/>
-            </geometry>
-        </collision>
-        <collision>
-            <origin rpy="0 0 0" xyz="0.136525 0.4191 0.03096"/>
-            <geometry>
-                <box size="0.01905 0.3048 0.0381"/>
-            </geometry>
-        </collision>
-
-        <!-- Back left bins -->
-        <collision>
-            <origin rpy="0 0 0" xyz="-0.682625 0.4191 0.03096"/>
-            <geometry>
-                <box size="0.01905 0.3048 0.0381"/>
-            </geometry>
-        </collision>
-        <collision>
-            <origin rpy="0 0 0" xyz="-0.409575 0.4191 0.03096"/>
-            <geometry>
-                <box size="0.01905 0.3048 0.0381"/>
-            </geometry>
-        </collision>
-        <collision>
-            <origin rpy="0 0 0" xyz="-0.136525 0.4191 0.03096"/>
-            <geometry>
-                <box size="0.01905 0.3048 0.0381"/>
-            </geometry>
-        </collision>
-
-        <!-- Front right bins-->
-        <collision>
-            <origin rpy="0 0 0" xyz="0.682625 -0.4191 0.03096"/>
-            <geometry>
-                <box size="0.01905 0.3048 0.0381"/>
-            </geometry>
-        </collision>
-        <collision>
-            <origin rpy="0 0 0" xyz="0.409575 -0.4191 0.03096"/>
-            <geometry>
-                <box size="0.01905 0.3048 0.0381"/>
-            </geometry>
-        </collision>
-        <collision>
-            <origin rpy="0 0 0" xyz="0.136525 -0.4191 0.03096"/>
-            <geometry>
-                <box size="0.01905 0.3048 0.0381"/>
-            </geometry>
-        </collision>
-
-        <!-- Back right bins -->
-        <collision>
-            <origin rpy="0 0 0" xyz="-0.682625 -0.4191 0.03096"/>
-            <geometry>
-                <box size="0.01905 0.3048 0.0381"/>
-            </geometry>
-        </collision>
-        <collision>
-            <origin rpy="0 0 0" xyz="-0.409575 -0.4191 0.03096"/>
-            <geometry>
-                <box size="0.01905 0.3048 0.0381"/>
-            </geometry>
-        </collision>
-        <collision>
-            <origin rpy="0 0 0" xyz="-0.136525 -0.4191 0.03096"/>
-            <geometry>
-                <box size="0.01905 0.3048 0.0381"/>
-            </geometry>
-        </collision>
-    </link>
-
-    <!-- All ten buttons -->
-    <link name="push_link_0">
-        <visual>
-            <origin rpy="0 1.5708 0" xyz="-1.176325 -0.3423 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.011325" length ="0.0097" />
-            </geometry>
-            <material name="push_material">
-                <color rgba="1 1 1 1"/>
-            </material>
-        </visual>
-        <collision>
-            <origin rpy="0 1.5708 0" xyz="-1.176325 -0.3423 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.011325" length ="0.0097" />
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".005"/>
-            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
-        </inertial>
-    </link>
-    <link name="ring_link_0">
-        <visual>
-            <origin rpy="0 1.5708 0" xyz="-1.17875 -0.3423 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.01665" length ="0.0047" />
-            </geometry>
-            <material name="ring_material">
-                <color rgba="0.9 0.9 0.9 0.8"/>
-            </material>
-        </visual>
-        <collision>
-            <origin rpy="0 1.5708 0" xyz="-1.17875 -0.3423 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.01665" length ="0.0047" />
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".005"/>
-            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
-        </inertial>
-    </link>
-    <joint name="ring_push_joint_0" type="prismatic">
-        <parent link="ring_link_0"/>
-        <child link="push_link_0"/>
-        <axis xyz="1 0 0"/>
-        <limit lower="-0.0041" upper="0" effort="0.2" velocity="0.5" />
-    </joint>
-    <joint name="field_ring_joint_0" type="fixed">
-        <parent link="field_link"/>
-        <child link="ring_link_0"/>
-    </joint>
-
-    <link name="push_link_1">
-        <visual>
-            <origin rpy="0 1.5708 0" xyz="-1.176325 -0.2661 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.011325" length ="0.0097" />
-            </geometry>
-            <material name="push_material">
-                <color rgba="1 1 1 1"/>
-            </material>
-        </visual>
-        <collision>
-            <origin rpy="0 1.5708 0" xyz="-1.176325 -0.2661 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.011325" length ="0.0097" />
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".005"/>
-            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
-        </inertial>
-    </link>
-    <link name="ring_link_1">
-        <visual>
-            <origin rpy="0 1.5708 0" xyz="-1.17875 -0.2661 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.01665" length ="0.0047" />
-            </geometry>
-            <material name="ring_material">
-                <color rgba="0.9 0.9 0.9 0.8"/>
-            </material>
-        </visual>
-        <collision>
-            <origin rpy="0 1.5708 0" xyz="-1.17875 -0.2661 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.01665" length ="0.0047" />
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".005"/>
-            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
-        </inertial>
-    </link>
-    <joint name="ring_push_joint_1" type="prismatic">
-        <parent link="ring_link_1"/>
-        <child link="push_link_1"/>
-        <axis xyz="1 0 0"/>
-        <limit lower="-0.0041" upper="0" effort="0.2" velocity="0.5" />
-    </joint>
-    <joint name="field_ring_joint_1" type="fixed">
-        <parent link="field_link"/>
-        <child link="ring_link_1"/>
-    </joint>
-
-    <link name="push_link_2">
-        <visual>
-            <origin rpy="0 1.5708 0" xyz="-1.176325 -0.1899 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.011325" length ="0.0097" />
-            </geometry>
-            <material name="push_material">
-                <color rgba="1 1 1 1"/>
-            </material>
-        </visual>
-        <collision>
-            <origin rpy="0 1.5708 0" xyz="-1.176325 -0.1899 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.011325" length ="0.0097" />
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".005"/>
-            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
-        </inertial>
-    </link>
-    <link name="ring_link_2">
-        <visual>
-            <origin rpy="0 1.5708 0" xyz="-1.17875 -0.1899 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.01665" length ="0.0047" />
-            </geometry>
-            <material name="ring_material">
-                <color rgba="0.9 0.9 0.9 0.8"/>
-            </material>
-        </visual>
-        <collision>
-            <origin rpy="0 1.5708 0" xyz="-1.17875 -0.1899 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.01665" length ="0.0047" />
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".005"/>
-            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
-        </inertial>
-    </link>
-    <joint name="ring_push_joint_2" type="prismatic">
-        <parent link="ring_link_2"/>
-        <child link="push_link_2"/>
-        <axis xyz="1 0 0"/>
-        <limit lower="-0.0041" upper="0" effort="0.2" velocity="0.5" />
-    </joint>
-    <joint name="field_ring_joint_2" type="fixed">
-        <parent link="field_link"/>
-        <child link="ring_link_2"/>
-    </joint>
-
-    <link name="push_link_3">
-        <visual>
-            <origin rpy="0 1.5708 0" xyz="-1.176325 -0.1137 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.011325" length ="0.0097" />
-            </geometry>
-            <material name="push_material">
-                <color rgba="1 1 1 1"/>
-            </material>
-        </visual>
-        <collision>
-            <origin rpy="0 1.5708 0" xyz="-1.176325 -0.1137 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.011325" length ="0.0097" />
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".005"/>
-            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
-        </inertial>
-    </link>
-    <link name="ring_link_3">
-        <visual>
-            <origin rpy="0 1.5708 0" xyz="-1.17875 -0.1137 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.01665" length ="0.0047" />
-            </geometry>
-            <material name="ring_material">
-                <color rgba="0.9 0.9 0.9 0.8"/>
-            </material>
-        </visual>
-        <collision>
-            <origin rpy="0 1.5708 0" xyz="-1.17875 -0.1137 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.01665" length ="0.0047" />
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".005"/>
-            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
-        </inertial>
-    </link>
-    <joint name="ring_push_joint_3" type="prismatic">
-        <parent link="ring_link_3"/>
-        <child link="push_link_3"/>
-        <axis xyz="1 0 0"/>
-        <limit lower="-0.0041" upper="0" effort="0.2" velocity="0.5" />
-    </joint>
-    <joint name="field_ring_joint_3" type="fixed">
-        <parent link="field_link"/>
-        <child link="ring_link_3"/>
-    </joint>
-
-    <link name="push_link_4">
-        <visual>
-            <origin rpy="0 1.5708 0" xyz="-1.176325 -0.0375 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.011325" length ="0.0097" />
-            </geometry>
-            <material name="push_material">
-                <color rgba="1 1 1 1"/>
-            </material>
-        </visual>
-        <collision>
-            <origin rpy="0 1.5708 0" xyz="-1.176325 -0.0375 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.011325" length ="0.0097" />
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".005"/>
-            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
-        </inertial>
-    </link>
-    <link name="ring_link_4">
-        <visual>
-            <origin rpy="0 1.5708 0" xyz="-1.17875 -0.0375 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.01665" length ="0.0047" />
-            </geometry>
-            <material name="ring_material">
-                <color rgba="0.9 0.9 0.9 0.8"/>
-            </material>
-        </visual>
-        <collision>
-            <origin rpy="0 1.5708 0" xyz="-1.17875 -0.0375 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.01665" length ="0.0047" />
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".005"/>
-            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
-        </inertial>
-    </link>
-    <joint name="ring_push_joint_4" type="prismatic">
-        <parent link="ring_link_4"/>
-        <child link="push_link_4"/>
-        <axis xyz="1 0 0"/>
-        <limit lower="-0.0041" upper="0" effort="0.2" velocity="0.5" />
-    </joint>
-    <joint name="field_ring_joint_4" type="fixed">
-        <parent link="field_link"/>
-        <child link="ring_link_4"/>
-    </joint>
-    
-    <link name="push_link_9">
-        <visual>
-            <origin rpy="0 1.5708 0" xyz="-1.176325 0.3423 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.011325" length ="0.0097" />
-            </geometry>
-            <material name="push_material">
-                <color rgba="1 1 1 1"/>
-            </material>
-        </visual>
-        <collision>
-            <origin rpy="0 1.5708 0" xyz="-1.176325 0.3423 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.011325" length ="0.0097" />
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".005"/>
-            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
-        </inertial>
-    </link>
-    <link name="ring_link_9">
-        <visual>
-            <origin rpy="0 1.5708 0" xyz="-1.17875 0.3423 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.01665" length ="0.0047" />
-            </geometry>
-            <material name="ring_material">
-                <color rgba="0.9 0.9 0.9 0.8"/>
-            </material>
-        </visual>
-        <collision>
-            <origin rpy="0 1.5708 0" xyz="-1.17875 0.3423 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.01665" length ="0.0047" />
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".005"/>
-            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
-        </inertial>
-    </link>
-    <joint name="ring_push_joint_9" type="prismatic">
-        <parent link="ring_link_9"/>
-        <child link="push_link_9"/>
-        <axis xyz="1 0 0"/>
-        <limit lower="-0.0041" upper="0" effort="0.2" velocity="0.5" />
-    </joint>
-    <joint name="field_ring_joint_9" type="fixed">
-        <parent link="field_link"/>
-        <child link="ring_link_9"/>
-    </joint>
-
-    <link name="push_link_8">
-        <visual>
-            <origin rpy="0 1.5708 0" xyz="-1.176325 0.2661 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.011325" length ="0.0097" />
-            </geometry>
-            <material name="push_material">
-                <color rgba="1 1 1 1"/>
-            </material>
-        </visual>
-        <collision>
-            <origin rpy="0 1.5708 0" xyz="-1.176325 0.2661 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.011325" length ="0.0097" />
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".005"/>
-            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
-        </inertial>
-    </link>
-    <link name="ring_link_8">
-        <visual>
-            <origin rpy="0 1.5708 0" xyz="-1.17875 0.2661 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.01665" length ="0.0047" />
-            </geometry>
-            <material name="ring_material">
-                <color rgba="0.9 0.9 0.9 0.8"/>
-            </material>
-        </visual>
-        <collision>
-            <origin rpy="0 1.5708 0" xyz="-1.17875 0.2661 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.01665" length ="0.0047" />
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".005"/>
-            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
-        </inertial>
-    </link>
-    <joint name="ring_push_joint_8" type="prismatic">
-        <parent link="ring_link_8"/>
-        <child link="push_link_8"/>
-        <axis xyz="1 0 0"/>
-        <limit lower="-0.0041" upper="0" effort="0.2" velocity="0.5" />
-    </joint>
-    <joint name="field_ring_joint_8" type="fixed">
-        <parent link="field_link"/>
-        <child link="ring_link_8"/>
-    </joint>
-
-    <link name="push_link_7">
-        <visual>
-            <origin rpy="0 1.5708 0" xyz="-1.176325 0.1899 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.011325" length ="0.0097" />
-            </geometry>
-            <material name="push_material">
-                <color rgba="1 1 1 1"/>
-            </material>
-        </visual>
-        <collision>
-            <origin rpy="0 1.5708 0" xyz="-1.176325 0.1899 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.011325" length ="0.0097" />
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".005"/>
-            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
-        </inertial>
-    </link>
-    <link name="ring_link_7">
-        <visual>
-            <origin rpy="0 1.5708 0" xyz="-1.17875 0.1899 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.01665" length ="0.0047" />
-            </geometry>
-            <material name="ring_material">
-                <color rgba="0.9 0.9 0.9 0.8"/>
-            </material>
-        </visual>
-        <collision>
-            <origin rpy="0 1.5708 0" xyz="-1.17875 0.1899 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.01665" length ="0.0047" />
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".005"/>
-            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
-        </inertial>
-    </link>
-    <joint name="ring_push_joint_7" type="prismatic">
-        <parent link="ring_link_7"/>
-        <child link="push_link_7"/>
-        <axis xyz="1 0 0"/>
-        <limit lower="-0.0041" upper="0" effort="0.2" velocity="0.5" />
-    </joint>
-    <joint name="field_ring_joint_7" type="fixed">
-        <parent link="field_link"/>
-        <child link="ring_link_7"/>
-    </joint>
-
-    <link name="push_link_6">
-        <visual>
-            <origin rpy="0 1.5708 0" xyz="-1.176325 0.1137 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.011325" length ="0.0097" />
-            </geometry>
-            <material name="push_material">
-                <color rgba="1 1 1 1"/>
-            </material>
-        </visual>
-        <collision>
-            <origin rpy="0 1.5708 0" xyz="-1.176325 0.1137 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.011325" length ="0.0097" />
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".005"/>
-            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
-        </inertial>
-    </link>
-    <link name="ring_link_6">
-        <visual>
-            <origin rpy="0 1.5708 0" xyz="-1.17875 0.1137 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.01665" length ="0.0047" />
-            </geometry>
-            <material name="ring_material">
-                <color rgba="0.9 0.9 0.9 0.8"/>
-            </material>
-        </visual>
-        <collision>
-            <origin rpy="0 1.5708 0" xyz="-1.17875 0.1137 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.01665" length ="0.0047" />
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".005"/>
-            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
-        </inertial>
-    </link>
-    <joint name="ring_push_joint_6" type="prismatic">
-        <parent link="ring_link_6"/>
-        <child link="push_link_6"/>
-        <axis xyz="1 0 0"/>
-        <limit lower="-0.0041" upper="0" effort="0.2" velocity="0.5" />
-    </joint>
-    <joint name="field_ring_joint_6" type="fixed">
-        <parent link="field_link"/>
-        <child link="ring_link_6"/>
-    </joint>
-
-    <link name="push_link_5">
-        <visual>
-            <origin rpy="0 1.5708 0" xyz="-1.176325 0.0375 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.011325" length ="0.0097" />
-            </geometry>
-            <material name="push_material">
-                <color rgba="1 1 1 1"/>
-            </material>
-        </visual>
-        <collision>
-            <origin rpy="0 1.5708 0" xyz="-1.176325 0.0375 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.011325" length ="0.0097" />
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".005"/>
-            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
-        </inertial>
-    </link>
-    <link name="ring_link_5">
-        <visual>
-            <origin rpy="0 1.5708 0" xyz="-1.17875 0.0375 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.01665" length ="0.0047" />
-            </geometry>
-            <material name="ring_material">
-                <color rgba="0.9 0.9 0.9 0.8"/>
-            </material>
-        </visual>
-        <collision>
-            <origin rpy="0 1.5708 0" xyz="-1.17875 0.0375 0.04445"/>
-            <geometry>
-                <cylinder radius= "0.01665" length ="0.0047" />
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".005"/>
-            <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
-        </inertial>
-    </link>
-    <joint name="ring_push_joint_5" type="prismatic">
-        <parent link="ring_link_5"/>
-        <child link="push_link_5"/>
-        <axis xyz="1 0 0"/>
-        <limit lower="-0.0041" upper="0" effort="0.2" velocity="0.5" />
-    </joint>
-    <joint name="field_ring_joint_5" type="fixed">
-        <parent link="field_link"/>
-        <child link="ring_link_5"/>
-    </joint>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- =================================================================================== -->
+<!-- |    This document was autogenerated by xacro from data/field/field.xacro         | -->
+<!-- |    EDITING THIS FILE BY HAND IS NOT RECOMMENDED                                 | -->
+<!-- =================================================================================== -->
+<robot name="field.urdf" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <link name="field_link">
+    <!-- We don't need inertial since it is loaded with a fixed base -->
+    <!-- Import the visual from a textured .obj -->
+    <visual>
+      <!-- Center on the origin -->
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="field.obj" scale="1 1 1"/>
+      </geometry>
+      <!-- For some reason textures don't load without this -->
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 -0.05"/>
+      <geometry>
+        <box size="2.4384 1.2192 0.1"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.1651 0 0.005953"/>
+      <geometry>
+        <box size="2.1082 1.2192 0.01191"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.9398 0.3302 0.005953"/>
+      <geometry>
+        <box size="0.1016 0.5588 0.01191"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.9398 -0.3302 0.005953"/>
+      <geometry>
+        <box size="0.1016 0.5588 0.01191"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="1.1049 0 0.005953"/>
+      <geometry>
+        <box size="0.2286 1.2192 0.01191"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="1.20015 0 0.05636"/>
+      <geometry>
+        <box size="0.0381 1.2192 0.0889"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0.59055 0.05636"/>
+      <geometry>
+        <box size="2.4384 0.0381 0.0889"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 -0.59055 0.05636"/>
+      <geometry>
+        <box size="2.4384 0.0381 0.0889"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="-1.20784375 0 0.05636"/>
+      <geometry>
+        <box size="0.0227125 1.2192 0.0889"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="-1.18879375 0 0.080955"/>
+      <geometry>
+        <box size="0.0153875 1.2192 0.03971"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="-1.18879375 0 0.019855"/>
+      <geometry>
+        <box size="0.0153875 1.2192 0.01589"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="-1.18879375 0.484275 0.04445"/>
+      <geometry>
+        <box size="0.0153875 0.25065 0.0333"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="-1.18879375 -0.484275 0.04445"/>
+      <geometry>
+        <box size="0.0153875 0.25065 0.0333"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="-1.8879375 -0.3042 0.04445"/>
+      <geometry>
+        <box size="0.0153875 0.0762 0.0333"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="-1.8879375 -0.228 0.04445"/>
+      <geometry>
+        <box size="0.0153875 0.0762 0.0333"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="-1.8879375 -0.1518 0.04445"/>
+      <geometry>
+        <box size="0.0153875 0.0762 0.0333"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="-1.8879375 -0.0756 0.04445"/>
+      <geometry>
+        <box size="0.0153875 0.0762 0.0333"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="-1.8879375 1.73472347598e-17 0.04445"/>
+      <geometry>
+        <box size="0.0153875 0.075 0.0333"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="-1.8879375 0.0756 0.04445"/>
+      <geometry>
+        <box size="0.0153875 0.0762 0.0333"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="-1.8879375 0.1518 0.04445"/>
+      <geometry>
+        <box size="0.0153875 0.0762 0.0333"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="-1.8879375 0.228 0.04445"/>
+      <geometry>
+        <box size="0.0153875 0.0762 0.0333"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="-1.8879375 0.3042 0.04445"/>
+      <geometry>
+        <box size="0.0153875 0.0762 0.0333"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.682625 0.4191 0.03096"/>
+      <geometry>
+        <box size="0.01905 0.3048 0.0381"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.409575 0.4191 0.03096"/>
+      <geometry>
+        <box size="0.01905 0.3048 0.0381"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.136525 0.4191 0.03096"/>
+      <geometry>
+        <box size="0.01905 0.3048 0.0381"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.136525 0.4191 0.03096"/>
+      <geometry>
+        <box size="0.01905 0.3048 0.0381"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.409575 0.4191 0.03096"/>
+      <geometry>
+        <box size="0.01905 0.3048 0.0381"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.682625 0.4191 0.03096"/>
+      <geometry>
+        <box size="0.01905 0.3048 0.0381"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.682625 -0.4191 0.03096"/>
+      <geometry>
+        <box size="0.01905 0.3048 0.0381"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.409575 -0.4191 0.03096"/>
+      <geometry>
+        <box size="0.01905 0.3048 0.0381"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.136525 -0.4191 0.03096"/>
+      <geometry>
+        <box size="0.01905 0.3048 0.0381"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.136525 -0.4191 0.03096"/>
+      <geometry>
+        <box size="0.01905 0.3048 0.0381"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.409575 -0.4191 0.03096"/>
+      <geometry>
+        <box size="0.01905 0.3048 0.0381"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.682625 -0.4191 0.03096"/>
+      <geometry>
+        <box size="0.01905 0.3048 0.0381"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="push_link_0">
+    <visual>
+      <origin rpy="0 1.5708 0" xyz="-1.189125 -0.3423 0.04445"/>
+      <geometry>
+        <cylinder length="0.0097" radius="0.011325"/>
+      </geometry>
+      <material name="push_material_0">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="-1.189125 -0.3423 0.04445"/>
+      <geometry>
+        <cylinder length="0.0097" radius="0.011325"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value=".005"/>
+      <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+    </inertial>
+  </link>
+  <link name="ring_link_0">
+    <visual>
+      <origin rpy="0 1.5708 0" xyz="-1.19155 -0.3423 0.04445"/>
+      <geometry>
+        <cylinder length="0.0047" radius="0.01665"/>
+      </geometry>
+      <material name="ring_material">
+        <color rgba="0.9 0.9 0.9 0.8"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="-1.19155 -0.3423 0.04445"/>
+      <geometry>
+        <cylinder length="0.0047" radius="0.01665"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value=".005"/>
+      <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+    </inertial>
+  </link>
+  <joint name="ring_push_joint_0" type="prismatic">
+    <parent link="ring_link_0"/>
+    <child link="push_link_0"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="0.2" lower="-0.0041" upper="0" velocity="0.5"/>
+  </joint>
+  <joint name="field_ring_joint_0" type="fixed">
+    <parent link="field_link"/>
+    <child link="ring_link_0"/>
+  </joint>
+  <link name="push_link_1">
+    <visual>
+      <origin rpy="0 1.5708 0" xyz="-1.189125 -0.2661 0.04445"/>
+      <geometry>
+        <cylinder length="0.0097" radius="0.011325"/>
+      </geometry>
+      <material name="push_material_1">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="-1.189125 -0.2661 0.04445"/>
+      <geometry>
+        <cylinder length="0.0097" radius="0.011325"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value=".005"/>
+      <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+    </inertial>
+  </link>
+  <link name="ring_link_1">
+    <visual>
+      <origin rpy="0 1.5708 0" xyz="-1.19155 -0.2661 0.04445"/>
+      <geometry>
+        <cylinder length="0.0047" radius="0.01665"/>
+      </geometry>
+      <material name="ring_material">
+        <color rgba="0.9 0.9 0.9 0.8"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="-1.19155 -0.2661 0.04445"/>
+      <geometry>
+        <cylinder length="0.0047" radius="0.01665"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value=".005"/>
+      <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+    </inertial>
+  </link>
+  <joint name="ring_push_joint_1" type="prismatic">
+    <parent link="ring_link_1"/>
+    <child link="push_link_1"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="0.2" lower="-0.0041" upper="0" velocity="0.5"/>
+  </joint>
+  <joint name="field_ring_joint_1" type="fixed">
+    <parent link="field_link"/>
+    <child link="ring_link_1"/>
+  </joint>
+  <link name="push_link_2">
+    <visual>
+      <origin rpy="0 1.5708 0" xyz="-1.189125 -0.1899 0.04445"/>
+      <geometry>
+        <cylinder length="0.0097" radius="0.011325"/>
+      </geometry>
+      <material name="push_material_2">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="-1.189125 -0.1899 0.04445"/>
+      <geometry>
+        <cylinder length="0.0097" radius="0.011325"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value=".005"/>
+      <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+    </inertial>
+  </link>
+  <link name="ring_link_2">
+    <visual>
+      <origin rpy="0 1.5708 0" xyz="-1.19155 -0.1899 0.04445"/>
+      <geometry>
+        <cylinder length="0.0047" radius="0.01665"/>
+      </geometry>
+      <material name="ring_material">
+        <color rgba="0.9 0.9 0.9 0.8"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="-1.19155 -0.1899 0.04445"/>
+      <geometry>
+        <cylinder length="0.0047" radius="0.01665"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value=".005"/>
+      <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+    </inertial>
+  </link>
+  <joint name="ring_push_joint_2" type="prismatic">
+    <parent link="ring_link_2"/>
+    <child link="push_link_2"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="0.2" lower="-0.0041" upper="0" velocity="0.5"/>
+  </joint>
+  <joint name="field_ring_joint_2" type="fixed">
+    <parent link="field_link"/>
+    <child link="ring_link_2"/>
+  </joint>
+  <link name="push_link_3">
+    <visual>
+      <origin rpy="0 1.5708 0" xyz="-1.189125 -0.1137 0.04445"/>
+      <geometry>
+        <cylinder length="0.0097" radius="0.011325"/>
+      </geometry>
+      <material name="push_material_3">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="-1.189125 -0.1137 0.04445"/>
+      <geometry>
+        <cylinder length="0.0097" radius="0.011325"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value=".005"/>
+      <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+    </inertial>
+  </link>
+  <link name="ring_link_3">
+    <visual>
+      <origin rpy="0 1.5708 0" xyz="-1.19155 -0.1137 0.04445"/>
+      <geometry>
+        <cylinder length="0.0047" radius="0.01665"/>
+      </geometry>
+      <material name="ring_material">
+        <color rgba="0.9 0.9 0.9 0.8"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="-1.19155 -0.1137 0.04445"/>
+      <geometry>
+        <cylinder length="0.0047" radius="0.01665"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value=".005"/>
+      <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+    </inertial>
+  </link>
+  <joint name="ring_push_joint_3" type="prismatic">
+    <parent link="ring_link_3"/>
+    <child link="push_link_3"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="0.2" lower="-0.0041" upper="0" velocity="0.5"/>
+  </joint>
+  <joint name="field_ring_joint_3" type="fixed">
+    <parent link="field_link"/>
+    <child link="ring_link_3"/>
+  </joint>
+  <link name="push_link_4">
+    <visual>
+      <origin rpy="0 1.5708 0" xyz="-1.189125 -0.0375 0.04445"/>
+      <geometry>
+        <cylinder length="0.0097" radius="0.011325"/>
+      </geometry>
+      <material name="push_material_4">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="-1.189125 -0.0375 0.04445"/>
+      <geometry>
+        <cylinder length="0.0097" radius="0.011325"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value=".005"/>
+      <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+    </inertial>
+  </link>
+  <link name="ring_link_4">
+    <visual>
+      <origin rpy="0 1.5708 0" xyz="-1.19155 -0.0375 0.04445"/>
+      <geometry>
+        <cylinder length="0.0047" radius="0.01665"/>
+      </geometry>
+      <material name="ring_material">
+        <color rgba="0.9 0.9 0.9 0.8"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="-1.19155 -0.0375 0.04445"/>
+      <geometry>
+        <cylinder length="0.0047" radius="0.01665"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value=".005"/>
+      <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+    </inertial>
+  </link>
+  <joint name="ring_push_joint_4" type="prismatic">
+    <parent link="ring_link_4"/>
+    <child link="push_link_4"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="0.2" lower="-0.0041" upper="0" velocity="0.5"/>
+  </joint>
+  <joint name="field_ring_joint_4" type="fixed">
+    <parent link="field_link"/>
+    <child link="ring_link_4"/>
+  </joint>
+  <link name="push_link_5">
+    <visual>
+      <origin rpy="0 1.5708 0" xyz="-1.189125 0.0375 0.04445"/>
+      <geometry>
+        <cylinder length="0.0097" radius="0.011325"/>
+      </geometry>
+      <material name="push_material_5">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="-1.189125 0.0375 0.04445"/>
+      <geometry>
+        <cylinder length="0.0097" radius="0.011325"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value=".005"/>
+      <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+    </inertial>
+  </link>
+  <link name="ring_link_5">
+    <visual>
+      <origin rpy="0 1.5708 0" xyz="-1.19155 0.0375 0.04445"/>
+      <geometry>
+        <cylinder length="0.0047" radius="0.01665"/>
+      </geometry>
+      <material name="ring_material">
+        <color rgba="0.9 0.9 0.9 0.8"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="-1.19155 0.0375 0.04445"/>
+      <geometry>
+        <cylinder length="0.0047" radius="0.01665"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value=".005"/>
+      <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+    </inertial>
+  </link>
+  <joint name="ring_push_joint_5" type="prismatic">
+    <parent link="ring_link_5"/>
+    <child link="push_link_5"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="0.2" lower="-0.0041" upper="0" velocity="0.5"/>
+  </joint>
+  <joint name="field_ring_joint_5" type="fixed">
+    <parent link="field_link"/>
+    <child link="ring_link_5"/>
+  </joint>
+  <link name="push_link_6">
+    <visual>
+      <origin rpy="0 1.5708 0" xyz="-1.189125 0.1137 0.04445"/>
+      <geometry>
+        <cylinder length="0.0097" radius="0.011325"/>
+      </geometry>
+      <material name="push_material_6">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="-1.189125 0.1137 0.04445"/>
+      <geometry>
+        <cylinder length="0.0097" radius="0.011325"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value=".005"/>
+      <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+    </inertial>
+  </link>
+  <link name="ring_link_6">
+    <visual>
+      <origin rpy="0 1.5708 0" xyz="-1.19155 0.1137 0.04445"/>
+      <geometry>
+        <cylinder length="0.0047" radius="0.01665"/>
+      </geometry>
+      <material name="ring_material">
+        <color rgba="0.9 0.9 0.9 0.8"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="-1.19155 0.1137 0.04445"/>
+      <geometry>
+        <cylinder length="0.0047" radius="0.01665"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value=".005"/>
+      <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+    </inertial>
+  </link>
+  <joint name="ring_push_joint_6" type="prismatic">
+    <parent link="ring_link_6"/>
+    <child link="push_link_6"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="0.2" lower="-0.0041" upper="0" velocity="0.5"/>
+  </joint>
+  <joint name="field_ring_joint_6" type="fixed">
+    <parent link="field_link"/>
+    <child link="ring_link_6"/>
+  </joint>
+  <link name="push_link_7">
+    <visual>
+      <origin rpy="0 1.5708 0" xyz="-1.189125 0.1899 0.04445"/>
+      <geometry>
+        <cylinder length="0.0097" radius="0.011325"/>
+      </geometry>
+      <material name="push_material_7">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="-1.189125 0.1899 0.04445"/>
+      <geometry>
+        <cylinder length="0.0097" radius="0.011325"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value=".005"/>
+      <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+    </inertial>
+  </link>
+  <link name="ring_link_7">
+    <visual>
+      <origin rpy="0 1.5708 0" xyz="-1.19155 0.1899 0.04445"/>
+      <geometry>
+        <cylinder length="0.0047" radius="0.01665"/>
+      </geometry>
+      <material name="ring_material">
+        <color rgba="0.9 0.9 0.9 0.8"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="-1.19155 0.1899 0.04445"/>
+      <geometry>
+        <cylinder length="0.0047" radius="0.01665"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value=".005"/>
+      <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+    </inertial>
+  </link>
+  <joint name="ring_push_joint_7" type="prismatic">
+    <parent link="ring_link_7"/>
+    <child link="push_link_7"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="0.2" lower="-0.0041" upper="0" velocity="0.5"/>
+  </joint>
+  <joint name="field_ring_joint_7" type="fixed">
+    <parent link="field_link"/>
+    <child link="ring_link_7"/>
+  </joint>
+  <link name="push_link_8">
+    <visual>
+      <origin rpy="0 1.5708 0" xyz="-1.189125 0.2661 0.04445"/>
+      <geometry>
+        <cylinder length="0.0097" radius="0.011325"/>
+      </geometry>
+      <material name="push_material_8">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="-1.189125 0.2661 0.04445"/>
+      <geometry>
+        <cylinder length="0.0097" radius="0.011325"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value=".005"/>
+      <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+    </inertial>
+  </link>
+  <link name="ring_link_8">
+    <visual>
+      <origin rpy="0 1.5708 0" xyz="-1.19155 0.2661 0.04445"/>
+      <geometry>
+        <cylinder length="0.0047" radius="0.01665"/>
+      </geometry>
+      <material name="ring_material">
+        <color rgba="0.9 0.9 0.9 0.8"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="-1.19155 0.2661 0.04445"/>
+      <geometry>
+        <cylinder length="0.0047" radius="0.01665"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value=".005"/>
+      <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+    </inertial>
+  </link>
+  <joint name="ring_push_joint_8" type="prismatic">
+    <parent link="ring_link_8"/>
+    <child link="push_link_8"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="0.2" lower="-0.0041" upper="0" velocity="0.5"/>
+  </joint>
+  <joint name="field_ring_joint_8" type="fixed">
+    <parent link="field_link"/>
+    <child link="ring_link_8"/>
+  </joint>
+  <link name="push_link_9">
+    <visual>
+      <origin rpy="0 1.5708 0" xyz="-1.189125 0.3423 0.04445"/>
+      <geometry>
+        <cylinder length="0.0097" radius="0.011325"/>
+      </geometry>
+      <material name="push_material_9">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="-1.189125 0.3423 0.04445"/>
+      <geometry>
+        <cylinder length="0.0097" radius="0.011325"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value=".005"/>
+      <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+    </inertial>
+  </link>
+  <link name="ring_link_9">
+    <visual>
+      <origin rpy="0 1.5708 0" xyz="-1.19155 0.3423 0.04445"/>
+      <geometry>
+        <cylinder length="0.0047" radius="0.01665"/>
+      </geometry>
+      <material name="ring_material">
+        <color rgba="0.9 0.9 0.9 0.8"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="-1.19155 0.3423 0.04445"/>
+      <geometry>
+        <cylinder length="0.0047" radius="0.01665"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value=".005"/>
+      <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+    </inertial>
+  </link>
+  <joint name="ring_push_joint_9" type="prismatic">
+    <parent link="ring_link_9"/>
+    <child link="push_link_9"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="0.2" lower="-0.0041" upper="0" velocity="0.5"/>
+  </joint>
+  <joint name="field_ring_joint_9" type="fixed">
+    <parent link="field_link"/>
+    <child link="ring_link_9"/>
+  </joint>
 </robot>
+

@@ -1,0 +1,194 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="field.urdf">
+    <link name="field_link">
+        <!-- We don't need inertial since it is loaded with a fixed base -->
+
+        <!-- Import the visual from a textured .obj -->
+        <visual>
+            <!-- Center on the origin -->
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            
+            <geometry>
+                <mesh filename="field.obj" scale="1 1 1"/>
+            </geometry>
+
+            <!-- For some reason textures don't load without this -->
+            <material name="white">
+                <color rgba="1 1 1 1"/>
+            </material>
+        </visual>
+
+
+        <!-- Macro for generic collision boxes -->
+        <!-- Length, width, and hight go to X, Y, and Z -->
+        <xacro:macro name="collision_box" params="x y z l w h">
+            <collision>
+                <origin rpy="0 0 0" xyz="${x} ${y} ${z}"/>
+                <geometry>
+                    <box size="${l} ${w} ${h}"/>
+                </geometry>
+            </collision>
+        </xacro:macro>
+
+        <!-- Under the base -->
+        <xacro:collision_box x="0"      y="0"      z="-.05"
+                             l="2.4384" w="1.2192" h=".1"/>
+
+        <!-- Back half of the base -->
+        <xacro:collision_box x="-0.1651" y="0"      z="0.005953" 
+                             l="2.1082"  w="1.2192" h="0.01191"/>
+
+        <!-- Sides of the base -->
+        <xacro:collision_box x="0.9398" y="0.3302" z="0.005953"
+                             l="0.1016" w="0.5588" h="0.01191"/>
+        <xacro:collision_box x="0.9398" y="-0.3302" z="0.005953"
+                             l="0.1016" w="0.5588"  h="0.01191"/>
+
+        <!-- Front of the base -->
+        <xacro:collision_box x="1.1049" y="0"      z="0.005953"
+                             l="0.2286" w="1.2192" h="0.01191"/>
+
+        <!-- Front wall -->
+        <xacro:collision_box x="1.20015" y="0"      z="0.05636"
+                             l="0.0381"  w="1.2192" h="0.0889"/>
+
+        <!-- Side walls -->
+        <xacro:collision_box x="0"      y="0.59055" z="0.05636"
+                             l="2.4384" w="0.0381"  h="0.0889"/>
+        <xacro:collision_box x="0"      y="-0.59055" z="0.05636"
+                             l="2.4384" w="0.0381"   h="0.0889"/>
+
+        <!-- Back wall -->
+        <xacro:collision_box x="-1.20784375" y="0"      z="0.05636"
+                             l="0.0227125"   w="1.2192" h="0.0889"/>
+        <!-- Top and bottom liners -->
+        <xacro:collision_box x="-1.18879375" y="0"      z="0.080955"
+                             l="0.0153875"   w="1.2192" h="0.03971"/>
+        <xacro:collision_box x="-1.18879375" y="0"      z="0.019855"
+                             l="0.0153875"   w="1.2192" h="0.01589"/>
+        <!-- Side liners -->
+        <xacro:collision_box x="-1.18879375" y="0.484275" z="0.04445"
+                             l="0.0153875"   w="0.25065"  h="0.0333"/>
+        <xacro:collision_box x="-1.18879375" y="-0.484275" z="0.04445"
+                             l="0.0153875"   w="0.25065"   h="0.0333"/>
+        <!-- Macro for the middle liners -->
+        <!-- Numbered 0-8 based on the button on its right -->
+        <xacro:macro name="mid_liner" params="num">
+            <!-- Compute the y values to draw between -->
+            <xacro:property name="by1"
+                value="${-0.3423 + num*0.0762 - (.0012 if num >= 5 else 0)}"/>
+            <xacro:property name="by2"
+                value="${-0.3423 + (num+1)*0.0762 - (.0012 if num >= 4 else 0)}"/>
+
+            <xacro:collision_box x="-1.8879375" y="${(by1+by2)/2}"  z=".04445"
+                                 l=".0153875"   w="${by2-by1}" h=".0333"/>
+        </xacro:macro>
+        <xacro:mid_liner num="0"/>
+        <xacro:mid_liner num="1"/>
+        <xacro:mid_liner num="2"/>
+        <xacro:mid_liner num="3"/>
+        <xacro:mid_liner num="4"/>
+        <xacro:mid_liner num="5"/>
+        <xacro:mid_liner num="6"/>
+        <xacro:mid_liner num="7"/>
+        <xacro:mid_liner num="8"/>
+
+        <!-- Macro for the bins -->
+        <!-- Numbering goes 0-5 front to back -->
+        <!-- Side is 1 if left and -1 if right -->
+        <xacro:macro name="bin" params="side num">
+            <xacro:collision_box x="${0.682625 - num*0.27305}" 
+                                 y="${side*0.4191}" 
+                                 z=".03096" l="0.01905" w="0.3048" h=".0381"/>
+        </xacro:macro>
+        <!-- Macro for an entire side -->
+        <xacro:macro name="bin_side" params="side">
+            <xacro:bin side="${side}" num="0"/>
+            <xacro:bin side="${side}" num="1"/>
+            <xacro:bin side="${side}" num="2"/>
+            <xacro:bin side="${side}" num="3"/>
+            <xacro:bin side="${side}" num="4"/>
+            <xacro:bin side="${side}" num="5"/>
+        </xacro:macro>
+
+        <xacro:bin_side side="1"/>
+        <xacro:bin_side side="-1"/>
+    </link>
+
+    <!-- Macro for the buttons -->
+    <!-- Numbered 0-9 -->
+    <xacro:macro name="button" params="num">
+        <!-- The y value of the button -->
+        <!-- Quite a long computation, so stored -->
+        <xacro:property name="by" 
+            value="${-0.3423 + num*0.0762 - (.0012 if num >= 5 else 0)}"/>
+        
+        <link name="push_link_${num}">
+            <visual>
+                <origin rpy="0 1.5708 0" xyz="-1.189125 ${by} 0.04445"/>
+                <geometry>
+                    <cylinder radius= "0.011325" length ="0.0097" />
+                </geometry>
+                <material name="push_material_${num}">
+                    <color rgba="1 1 1 1"/>
+                </material>
+            </visual>
+            <collision>
+                <origin rpy="0 1.5708 0" xyz="-1.189125 ${by} 0.04445"/>
+                <geometry>
+                    <cylinder radius= "0.011325" length ="0.0097" />
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value=".005"/>
+                <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+            </inertial>
+        </link>
+
+        <link name="ring_link_${num}">
+            <visual>
+                <origin rpy="0 1.5708 0" xyz="-1.19155 ${by} 0.04445"/>
+                <geometry>
+                    <cylinder radius= "0.01665" length ="0.0047" />
+                </geometry>
+                <material name="ring_material">
+                    <color rgba="0.9 0.9 0.9 0.8"/>
+                </material>
+            </visual>
+            <collision>
+                <origin rpy="0 1.5708 0" xyz="-1.19155 ${by} 0.04445"/>
+                <geometry>
+                    <cylinder radius= "0.01665" length ="0.0047" />
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value=".005"/>
+                <inertia ixx="1e-4" ixy="1e-4" ixz="1e-4" iyy="1e-4" iyz="1e-4" izz="1e-4"/>
+            </inertial>
+        </link>
+
+        <joint name="ring_push_joint_${num}" type="prismatic">
+            <parent link="ring_link_${num}"/>
+            <child link="push_link_${num}"/>
+            <axis xyz="1 0 0"/>
+            <limit lower="-0.0041" upper="0" effort="0.2" velocity="0.5" />
+        </joint>
+
+        <joint name="field_ring_joint_${num}" type="fixed">
+            <parent link="field_link"/>
+            <child link="ring_link_${num}"/>
+        </joint>
+    </xacro:macro>
+
+    <!-- All ten buttons -->
+    <xacro:button num="0"/>
+    <xacro:button num="1"/>
+    <xacro:button num="2"/>
+    <xacro:button num="3"/>
+    <xacro:button num="4"/>
+    <xacro:button num="5"/>
+    <xacro:button num="6"/>
+    <xacro:button num="7"/>
+    <xacro:button num="8"/>
+    <xacro:button num="9"/>
+</robot>

@@ -24,7 +24,10 @@ class Field:
         the method responsible for setting button joint IDs.
         """
         self.model_id = p.loadURDF(Utilities.gen_urdf_path("field/field.urdf", cwd), useFixedBase=True)
-        self.buttons.populate_joint_ids([1, 3, 5, 7, 9, 11, 13, 15, 17, 19])
+        # Load the texture as well
+        # Not done automatically for some reason
+        p.changeVisualShape(self.model_id, -1, textureUniqueId=p.loadTexture(Utilities.gen_urdf_path("field/field.png", cwd)))
 
+        self.buttons.populate_joint_ids([1, 3, 5, 7, 9, 11, 13, 15, 17, 19])
         for b in self.buttons:
             p.setJointMotorControl2(self.model_id, b.joint_id, controlMode=p.POSITION_CONTROL, targetPosition=0.0, force=0.2, positionGain=0.8)
