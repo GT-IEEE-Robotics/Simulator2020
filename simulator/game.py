@@ -12,6 +12,7 @@ import pybullet as p
 from simulator.field import Field
 from simulator.racecar_agent import RacecarAgent
 
+from simulator.utilities import Utilities
 
 class Game:
     """Maintains and coordinates the game loop"""
@@ -40,6 +41,8 @@ class Game:
         Including field, buttons, and more.
         """
         self.field.load_field_urdf(self.cwd)
+        p.loadURDF(Utilities.gen_urdf_path("lego/lego.urdf", self.cwd), basePosition=[.4, 0, .2], globalScaling=4)
+        p.loadURDF(Utilities.gen_urdf_path("lego/lego.urdf", self.cwd), basePosition=[.4, 0, .4], globalScaling=4)
 
     def load_agents(self):
         """Loading the agents
@@ -117,4 +120,4 @@ class Game:
             p.stepSimulation()
             # Sleep for slightly less time to make it seem realitme
             # Fudge factor experimentally determined
-            time.sleep(1/240 - .0002)
+            time.sleep(1/240 - 1/240)
