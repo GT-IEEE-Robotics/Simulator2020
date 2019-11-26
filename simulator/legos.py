@@ -22,7 +22,7 @@ class Legos:
     """
 
     """The height to spawn the blocks at"""
-    SPAWN_HEIGHT = .4
+    SPAWN_HEIGHT = .06
 
     def __init__(self):
         """Creates an array of all the block ids to be populated.
