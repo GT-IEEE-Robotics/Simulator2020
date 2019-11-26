@@ -43,7 +43,7 @@ class Game:
         Including field, buttons, and more.
         """
         self.field.load_field_urdf(self.cwd)
-        self.legos.load_lego_urdfs(self.cwd, [(0, .3, "#ffffffff")])        
+        self.legos.load_lego_urdfs(self.cwd, [(0, .3, "#ffffff")])        
 
     def load_agents(self):
         """Loading the agents
