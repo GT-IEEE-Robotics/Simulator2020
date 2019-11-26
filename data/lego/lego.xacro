@@ -4,8 +4,6 @@
     <material name="white">
         <color rgba="1 1 1 1"/>
     </material>
-    <!-- Desnity for mass calculations -->
-    <xacro:property name="density" value="4000"/> <!-- kg/m^3 -->
 
     <!-- Macro for visual and collision boxes -->
     <!-- Length, width, and height are along X, Y, and Z -->
@@ -26,15 +24,6 @@
             <xacro:pri_inner x="${x}" y="${y}" z="${z}" 
                              l="${l}" w="${w}" h="${h}"/>
         </collision>
-        <inertial>
-            <xacro:property name="m" value="${density*l*w*h}"/>
-            <origin rpy="0 0 0" xyz="${x} ${y} ${z}"/>
-            <mass value="${m}"/>
-            <inertia ixx="${1/12 * m * (w*w + h*h)}"
-                     iyy="${1/12 * m * (l*l + h*h)}"
-                     izz="${1/12 * m * (l*l + w*w)}"
-                     ixy="0" ixz="0" iyz="0"/>
-        </inertial>
     </xacro:macro>
 
     <!-- Macro for visual and collision cylinders -->
@@ -54,14 +43,6 @@
         <collision>
             <xacro:cyl_inner x="${x}" y="${y}" z="${z}" r="${r}" l="${l}"/>
         </collision>
-        <inertial>
-            <xacro:property name="m" value="${density*pi*r*r*l}"/>
-            <mass value="${m}"/>
-            <inertia ixx="${1/12 * m * (3*r*r + l*l)}"
-                     iyy="${1/12 * m * (3*r*r + l*l)}"
-                     izz="${1/2 * m * r*r}"
-                     ixy="0" ixz="0" iyz="0"/>
-        </inertial>
     </xacro:macro>
 
     <link name="block">
@@ -103,5 +84,16 @@
                    l=".00131" w=".00168"   h=".0169"/>
         <xacro:pri x="-.00799" y="-.013535" z=".00845"
                    l=".00131"  w=".00168"   h=".0169"/>
+
+        <!-- Inertia is an approximation for now -->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 ${.02209/2}"/>
+            <xacro:property name="m" value="${4000 * .03163 * .03163 * .02209}"/>
+            <mass value="${m}"/>
+            <inertia ixx="${1/12 * m * (.03163*.03163 + .02209*.02209)}"
+                     iyy="${1/12 * m * (.03163*.03163 + .02209*.02209)}"
+                     izz="${1/12 * m * (2*.03163*.03163)}"
+                     ixy="0" ixz="0" iyz="0"/>
+        </inertial>
     </link>
 </robot>
