@@ -1,436 +1,334 @@
-<?xml version="1.0"?>
-<robot name="lego">
-    <material name="white">
-        <color rgba="1 1 1 1"/>
-    </material>
-
-    <link name="top_panel">
-        <visual>
-            <origin rpy="0 0 0" xyz="0 0 .01762"/>
-            <geometry>
-                <box size=".03163 .03163 .00144"/>
-            </geometry>
-            <material name="white"/>
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz="0 0 .01762"/>
-            <geometry>
-                <box size=".03163 .03163 .00144"/>
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".00576"/>
-            <inertia ixx="4.81e-7" iyy="4.81e-7" izz="9.61e-7"/>
-        </inertial>
-    </link>
-
-    <link name="front_panel">
-        <visual>
-            <origin rpy="0 0 0" xyz=".015095 0 .00845"/>
-            <geometry>
-                <box size=".00144 .03163 .0169"/>
-            </geometry>
-            <material name="white"/>
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz=".015095 0 .00845"/>
-            <geometry>
-                <box size=".00144 .03163 .0169"/>
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".00308"/>
-            <inertia ixx="3.30e-7" iyy="7.38e-8" izz="2.57e-7"/>
-        </inertial>
-    </link>
-    <joint name="top_front" type="fixed">
-        <parent link="top_panel"/>
-        <child link="front_panel"/>
-    </joint>
-
-    <link name="back_panel">
-        <visual>
-            <origin rpy="0 0 0" xyz="-.015095 0 .00845"/>
-            <geometry>
-                <box size=".00144 .03163 .0169"/>
-            </geometry>
-            <material name="white"/>
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz="-.015095 0 .00845"/>
-            <geometry>
-                <box size=".00144 .03163 .0169"/>
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".00308"/>
-            <inertia ixx="3.30e-7" iyy="7.38e-8" izz="2.57e-7"/>
-        </inertial>
-    </link>
-    <joint name="top_back" type="fixed">
-        <parent link="top_panel"/>
-        <child link="back_panel"/>
-    </joint>
-
-    <link name="left_panel">
-        <visual>
-            <origin rpy="0 0 0" xyz="0 .015095 .00845"/>
-            <geometry>
-                <box size=".02875 .00144 .0169"/>
-            </geometry>
-            <material name="white"/>
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz="0 .015095 .00845"/>
-            <geometry>
-                <box size=".02875 .00144 .0169"/>
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".00280"/>
-            <inertia ixx="6.71e-8" iyy="2.59e-7" izz="1.93e-7"/>
-        </inertial>
-    </link>
-    <joint name="top_left" type="fixed">
-        <parent link="top_panel"/>
-        <child link="left_panel"/>
-    </joint>
-
-    <link name="right_panel">
-        <visual>
-            <origin rpy="0 0 0" xyz="0 -.015095 .00845"/>
-            <geometry>
-                <box size=".02875 .00144 .0169"/>
-            </geometry>
-            <material name="white"/>
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz="0 -.015095 .00845"/>
-            <geometry>
-                <box size=".02875 .00144 .0169"/>
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".00280"/>
-            <inertia ixx="6.71e-8" iyy="2.59e-7" izz="1.93e-7"/>
-        </inertial>
-    </link>
-    <joint name="top_right" type="fixed">
-        <parent link="top_panel"/>
-        <child link="right_panel"/>
-    </joint>
-
-
-    <link name="fl_stud">
-        <visual>
-            <origin rpy="0 0 0" xyz=".008 .008 .020935"/>
-            <geometry>
-                <cylinder radius=".004695" length=".00519"/>
-            </geometry>
-            <material name="white"/>
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz=".008 .008 .020935"/>
-            <geometry>
-                <cylinder radius=".004695" length=".00519"/>
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".00144"/>
-            <inertia ixx="1.11e-8" iyy="1.11e-8" izz="1.58e-8"/>
-        </inertial>
-    </link>
-    <joint name="top_fl" type="fixed">
-        <parent link="top_panel"/>
-        <child link="fl_stud"/>
-    </joint>
-
-    <link name="bl_stud">
-        <visual>
-            <origin rpy="0 0 0" xyz="-.008 .008 .020935"/>
-            <geometry>
-                <cylinder radius=".004695" length=".00519"/>
-            </geometry>
-            <material name="white"/>
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz="-.008 .008 .020935"/>
-            <geometry>
-                <cylinder radius=".004695" length=".00519"/>
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".00144"/>
-            <inertia ixx="1.11e-8" iyy="1.11e-8" izz="1.58e-8"/>
-        </inertial>
-    </link>
-    <joint name="top_bl" type="fixed">
-        <parent link="top_panel"/>
-        <child link="bl_stud"/>
-    </joint>
-
-    <link name="fr_stud">
-        <visual>
-            <origin rpy="0 0 0" xyz=".008 -.008 .020935"/>
-            <geometry>
-                <cylinder radius=".004695" length=".00519"/>
-            </geometry>
-            <material name="white"/>
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz=".008 -.008 .020935"/>
-            <geometry>
-                <cylinder radius=".004695" length=".00519"/>
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".00144"/>
-            <inertia ixx="1.11e-8" iyy="1.11e-8" izz="1.58e-8"/>
-        </inertial>
-    </link>
-    <joint name="top_fr" type="fixed">
-        <parent link="top_panel"/>
-        <child link="fr_stud"/>
-    </joint>
-
-    <link name="br_stud">
-        <visual>
-            <origin rpy="0 0 0" xyz="-.008 -.008 .020935"/>
-            <geometry>
-                <cylinder radius=".004695" length=".00519"/>
-            </geometry>
-            <material name="white"/>
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz="-.008 -.008 .020935"/>
-            <geometry>
-                <cylinder radius=".004695" length=".00519"/>
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".00144"/>
-            <inertia ixx="1.11e-8" iyy="1.11e-8" izz="1.58e-8"/>
-        </inertial>
-    </link>
-    <joint name="top_br" type="fixed">
-        <parent link="top_panel"/>
-        <child link="br_stud"/>
-    </joint>
-
-    <link name="cen_stud">
-        <visual>
-            <origin rpy="0 0 0" xyz="0 0 .00845"/>
-            <geometry>
-                <cylinder radius=".006575" length=".0169"/>
-            </geometry>
-            <material name="white"/>
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz="0 0 .00845"/>
-            <geometry>
-                <cylinder radius=".006575" length=".0169"/>
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".00918"/>
-            <inertia ixx="3.18e-7" iyy="3.18e-7" izz="1.98e-7"/>
-        </inertial>
-    </link>
-    <joint name="top_cen" type="fixed">
-        <parent link="top_panel"/>
-        <child link="cen_stud"/>
-    </joint>
-
-
-    <link name="fl_brace">
-        <visual>
-            <origin rpy="0 0 0" xyz=".013535 .00799 .00845"/>
-            <geometry>
-                <box size=".00168 .00131 .0169"/>
-            </geometry>
-            <material name="white"/>
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz=".013535 .00799 .00845"/>
-            <geometry>
-                <box size=".00168 .00131 .0169"/>
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".000149"/>
-            <inertia ixx="3.56e-9" iyy="3.58e-9" izz="5.63e-11"/>
-        </inertial>
-    </link>
-    <joint name="top_bfl" type="fixed">
-        <parent link="top_panel"/>
-        <child link="fl_brace"/>
-    </joint>
-
-    <link name="fr_brace">
-        <visual>
-            <origin rpy="0 0 0" xyz=".013535 -.00799 .00845"/>
-            <geometry>
-                <box size=".00168 .00131 .0169"/>
-            </geometry>
-            <material name="white"/>
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz=".013535 -.00799 .00845"/>
-            <geometry>
-                <box size=".00168 .00131 .0169"/>
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".000149"/>
-            <inertia ixx="3.56e-9" iyy="3.58e-9" izz="5.63e-11"/>
-        </inertial>
-    </link>
-    <joint name="top_bfr" type="fixed">
-        <parent link="top_panel"/>
-        <child link="fr_brace"/>
-    </joint>
-
-    <link name="bl_brace">
-        <visual>
-            <origin rpy="0 0 0" xyz="-.013535 .00799 .00845"/>
-            <geometry>
-                <box size=".00168 .00131 .0169"/>
-            </geometry>
-            <material name="white"/>
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz="-.013535 .00799 .00845"/>
-            <geometry>
-                <box size=".00168 .00131 .0169"/>
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".000149"/>
-            <inertia ixx="3.56e-9" iyy="3.58e-9" izz="5.63e-11"/>
-        </inertial>
-    </link>
-    <joint name="top_bbl" type="fixed">
-        <parent link="top_panel"/>
-        <child link="bl_brace"/>
-    </joint>
-
-    <link name="br_brace">
-        <visual>
-            <origin rpy="0 0 0" xyz="-.013535 -.00799 .00845"/>
-            <geometry>
-                <box size=".00168 .00131 .0169"/>
-            </geometry>
-            <material name="white"/>
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz="-.013535 -.00799 .00845"/>
-            <geometry>
-                <box size=".00168 .00131 .0169"/>
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".000149"/>
-            <inertia ixx="3.56e-9" iyy="3.58e-9" izz="5.63e-11"/>
-        </inertial>
-    </link>
-    <joint name="top_bbr" type="fixed">
-        <parent link="top_panel"/>
-        <child link="br_brace"/>
-    </joint>
-
-    <link name="lf_brace">
-        <visual>
-            <origin rpy="0 0 0" xyz=".00799 .013535 .00845"/>
-            <geometry>
-                <box size=".00131 .00168 .0169"/>
-            </geometry>
-            <material name="white"/>
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz=".00799 .013535 .00845"/>
-            <geometry>
-                <box size=".00131 .00168 .0169"/>
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".000149"/>
-            <inertia ixx="3.58e-9" iyy="3.56e-9" izz="5.63e-11"/>
-        </inertial>
-    </link>
-    <joint name="top_blf" type="fixed">
-        <parent link="top_panel"/>
-        <child link="lf_brace"/>
-    </joint>
-
-    <link name="lb_brace">
-        <visual>
-            <origin rpy="0 0 0" xyz="-.00799 .013535 .00845"/>
-            <geometry>
-                <box size=".00131 .00168 .0169"/>
-            </geometry>
-            <material name="white"/>
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz="-.00799 .013535 .00845"/>
-            <geometry>
-                <box size=".00131 .00168 .0169"/>
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".000149"/>
-            <inertia ixx="3.58e-9" iyy="3.56e-9" izz="5.63e-11"/>
-        </inertial>
-    </link>
-    <joint name="top_blb" type="fixed">
-        <parent link="top_panel"/>
-        <child link="lb_brace"/>
-    </joint>
-
-    <link name="rf_brace">
-        <visual>
-            <origin rpy="0 0 0" xyz=".00799 -.013535 .00845"/>
-            <geometry>
-                <box size=".00131 .00168 .0169"/>
-            </geometry>
-            <material name="white"/>
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz=".00799 -.013535 .00845"/>
-            <geometry>
-                <box size=".00131 .00168 .0169"/>
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".000149"/>
-            <inertia ixx="3.58e-9" iyy="3.56e-9" izz="5.63e-11"/>
-        </inertial>
-    </link>
-    <joint name="top_brf" type="fixed">
-        <parent link="top_panel"/>
-        <child link="rf_brace"/>
-    </joint>
-
-    <link name="rb_brace">
-        <visual>
-            <origin rpy="0 0 0" xyz="-.00799 -.013535 .00845"/>
-            <geometry>
-                <box size=".00131 .00168 .0169"/>
-            </geometry>
-            <material name="white"/>
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz="-.00799 -.013535 .00845"/>
-            <geometry>
-                <box size=".00131 .00168 .0169"/>
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value=".000149"/>
-            <inertia ixx="3.58e-9" iyy="3.56e-9" izz="5.63e-11"/>
-        </inertial>
-    </link>
-    <joint name="top_brb" type="fixed">
-        <parent link="top_panel"/>
-        <child link="rb_brace"/>
-    </joint>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- =================================================================================== -->
+<!-- |    This document was autogenerated by xacro from data/lego/lego.xacro           | -->
+<!-- |    EDITING THIS FILE BY HAND IS NOT RECOMMENDED                                 | -->
+<!-- =================================================================================== -->
+<robot name="lego" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Global material for everything -->
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+  <!-- kg/m^3 -->
+  <link name="block">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0.01762"/>
+      <geometry>
+        <box size="0.03163 0.03163 0.00144"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.01762"/>
+      <geometry>
+        <box size="0.03163 0.03163 0.00144"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0.01762"/>
+      <mass value="0.005762631744"/>
+      <inertia ixx="4.81434506969e-07" ixy="0" ixz="0" iyy="4.81434506969e-07" iyz="0" izz="9.60877448407e-07"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.015095 0 0.00845"/>
+      <geometry>
+        <box size="0.00144 0.03163 0.0169"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.015095 0 0.00845"/>
+      <geometry>
+        <box size="0.00144 0.03163 0.0169"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.015095 0 0.00845"/>
+      <mass value="0.00307899072"/>
+      <inertia ixx="3.29982337533e-07" ixy="0" ixz="0" iyy="7.3814594558e-08" iyz="0" izz="2.57231842168e-07"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.015095 0 0.00845"/>
+      <geometry>
+        <box size="0.00144 0.03163 0.0169"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.015095 0 0.00845"/>
+      <geometry>
+        <box size="0.00144 0.03163 0.0169"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.015095 0 0.00845"/>
+      <mass value="0.00307899072"/>
+      <inertia ixx="3.29982337533e-07" ixy="0" ixz="0" iyy="7.3814594558e-08" iyz="0" izz="2.57231842168e-07"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0.015095 0.00845"/>
+      <geometry>
+        <box size="0.02875 0.00144 0.0169"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0.015095 0.00845"/>
+      <geometry>
+        <box size="0.02875 0.00144 0.0169"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0.015095 0.00845"/>
+      <mass value="0.00279864"/>
+      <inertia ixx="6.7093569192e-08" ixy="0" ixz="0" iyy="2.5938087045e-07" iyz="0" izz="1.93254511242e-07"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 -0.015095 0.00845"/>
+      <geometry>
+        <box size="0.02875 0.00144 0.0169"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 -0.015095 0.00845"/>
+      <geometry>
+        <box size="0.02875 0.00144 0.0169"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 -0.015095 0.00845"/>
+      <mass value="0.00279864"/>
+      <inertia ixx="6.7093569192e-08" ixy="0" ixz="0" iyy="2.5938087045e-07" iyz="0" izz="1.93254511242e-07"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.008 0.008 0.020935"/>
+      <geometry>
+        <cylinder length="0.00519" radius="0.004695"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.008 0.008 0.020935"/>
+      <geometry>
+        <cylinder length="0.00519" radius="0.004695"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.00143763426416"/>
+      <inertia ixx="1.11494736984e-08" ixy="0" ixz="0" iyy="1.11494736984e-08" iyz="0" izz="1.58449040129e-08"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.008 0.008 0.020935"/>
+      <geometry>
+        <cylinder length="0.00519" radius="0.004695"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.008 0.008 0.020935"/>
+      <geometry>
+        <cylinder length="0.00519" radius="0.004695"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.00143763426416"/>
+      <inertia ixx="1.11494736984e-08" ixy="0" ixz="0" iyy="1.11494736984e-08" iyz="0" izz="1.58449040129e-08"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.008 -0.008 0.020935"/>
+      <geometry>
+        <cylinder length="0.00519" radius="0.004695"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.008 -0.008 0.020935"/>
+      <geometry>
+        <cylinder length="0.00519" radius="0.004695"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.00143763426416"/>
+      <inertia ixx="1.11494736984e-08" ixy="0" ixz="0" iyy="1.11494736984e-08" iyz="0" izz="1.58449040129e-08"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.008 -0.008 0.020935"/>
+      <geometry>
+        <cylinder length="0.00519" radius="0.004695"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.008 -0.008 0.020935"/>
+      <geometry>
+        <cylinder length="0.00519" radius="0.004695"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.00143763426416"/>
+      <inertia ixx="1.11494736984e-08" ixy="0" ixz="0" iyy="1.11494736984e-08" iyz="0" izz="1.58449040129e-08"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0.00845"/>
+      <geometry>
+        <cylinder length="0.0169" radius="0.006575"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.00845"/>
+      <geometry>
+        <cylinder length="0.0169" radius="0.006575"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.00918095974032"/>
+      <inertia ixx="3.17739149538e-07" ixy="0" ixz="0" iyy="3.17739149538e-07" iyz="0" izz="1.98449313837e-07"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.013535 0.00799 0.00845"/>
+      <geometry>
+        <box size="0.00168 0.00131 0.0169"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.013535 0.00799 0.00845"/>
+      <geometry>
+        <box size="0.00168 0.00131 0.0169"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.013535 0.00799 0.00845"/>
+      <mass value="0.00014877408"/>
+      <inertia ixx="3.56222301562e-09" ixy="0" ixz="0" iyy="3.57593874602e-09" iyz="0" izz="5.626759684e-11"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.013535 -0.00799 0.00845"/>
+      <geometry>
+        <box size="0.00168 0.00131 0.0169"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.013535 -0.00799 0.00845"/>
+      <geometry>
+        <box size="0.00168 0.00131 0.0169"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.013535 -0.00799 0.00845"/>
+      <mass value="0.00014877408"/>
+      <inertia ixx="3.56222301562e-09" ixy="0" ixz="0" iyy="3.57593874602e-09" iyz="0" izz="5.626759684e-11"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.013535 0.00799 0.00845"/>
+      <geometry>
+        <box size="0.00168 0.00131 0.0169"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.013535 0.00799 0.00845"/>
+      <geometry>
+        <box size="0.00168 0.00131 0.0169"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.013535 0.00799 0.00845"/>
+      <mass value="0.00014877408"/>
+      <inertia ixx="3.56222301562e-09" ixy="0" ixz="0" iyy="3.57593874602e-09" iyz="0" izz="5.626759684e-11"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.013535 -0.00799 0.00845"/>
+      <geometry>
+        <box size="0.00168 0.00131 0.0169"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.013535 -0.00799 0.00845"/>
+      <geometry>
+        <box size="0.00168 0.00131 0.0169"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.013535 -0.00799 0.00845"/>
+      <mass value="0.00014877408"/>
+      <inertia ixx="3.56222301562e-09" ixy="0" ixz="0" iyy="3.57593874602e-09" iyz="0" izz="5.626759684e-11"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.00799 0.013535 0.00845"/>
+      <geometry>
+        <box size="0.00131 0.00168 0.0169"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.00799 0.013535 0.00845"/>
+      <geometry>
+        <box size="0.00131 0.00168 0.0169"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.00799 0.013535 0.00845"/>
+      <mass value="0.00014877408"/>
+      <inertia ixx="3.57593874602e-09" ixy="0" ixz="0" iyy="3.56222301562e-09" iyz="0" izz="5.626759684e-11"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.00799 0.013535 0.00845"/>
+      <geometry>
+        <box size="0.00131 0.00168 0.0169"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.00799 0.013535 0.00845"/>
+      <geometry>
+        <box size="0.00131 0.00168 0.0169"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.00799 0.013535 0.00845"/>
+      <mass value="0.00014877408"/>
+      <inertia ixx="3.57593874602e-09" ixy="0" ixz="0" iyy="3.56222301562e-09" iyz="0" izz="5.626759684e-11"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.00799 -0.013535 0.00845"/>
+      <geometry>
+        <box size="0.00131 0.00168 0.0169"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.00799 -0.013535 0.00845"/>
+      <geometry>
+        <box size="0.00131 0.00168 0.0169"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.00799 -0.013535 0.00845"/>
+      <mass value="0.00014877408"/>
+      <inertia ixx="3.57593874602e-09" ixy="0" ixz="0" iyy="3.56222301562e-09" iyz="0" izz="5.626759684e-11"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.00799 -0.013535 0.00845"/>
+      <geometry>
+        <box size="0.00131 0.00168 0.0169"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.00799 -0.013535 0.00845"/>
+      <geometry>
+        <box size="0.00131 0.00168 0.0169"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.00799 -0.013535 0.00845"/>
+      <mass value="0.00014877408"/>
+      <inertia ixx="3.57593874602e-09" ixy="0" ixz="0" iyy="3.56222301562e-09" iyz="0" izz="5.626759684e-11"/>
+    </inertial>
+  </link>
 </robot>
+

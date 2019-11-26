@@ -41,8 +41,14 @@ class Game:
         Including field, buttons, and more.
         """
         self.field.load_field_urdf(self.cwd)
-        p.loadURDF(Utilities.gen_urdf_path("lego/lego.urdf", self.cwd), basePosition=[.4, 0, .2], globalScaling=4)
-        p.loadURDF(Utilities.gen_urdf_path("lego/lego.urdf", self.cwd), basePosition=[.4, 0, .4], globalScaling=4)
+        
+        x = p.loadURDF(Utilities.gen_urdf_path("lego/lego.urdf", self.cwd), basePosition=[.95, 0, .2], baseOrientation=[0, .707, 0, .707], globalScaling=4)
+        #p.changeVisualShape(x, -1, rgbaColor=[0.1, 0.1, 0.1, 1])
+        p.changeDynamics(x, -1, contactStiffness=1e6, contactDamping=1e5)
+        
+        x = p.loadURDF(Utilities.gen_urdf_path("lego/lego.urdf", self.cwd), basePosition=[1.1, 0, .2], baseOrientation=[0, .707, 0, .707], globalScaling=4)
+        #p.changeVisualShape(x, -1, rgbaColor=[0.1, 0.1, 0.1, 1])
+        p.changeDynamics(x, -1, contactStiffness=1e6, contactDamping=1e5)
 
     def load_agents(self):
         """Loading the agents
