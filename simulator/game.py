@@ -9,8 +9,9 @@ import os
 import time
 import pybullet as p
 
-from simulator.field import Field
 from simulator.racecar_agent import RacecarAgent
+from simulator.field import Field
+from simulator.legos import Legos
 
 from simulator.utilities import Utilities
 
@@ -35,20 +36,14 @@ class Game:
 
         self.agent = RacecarAgent()
         self.field = Field()
+        self.legos = Legos()
 
     def load_statics(self):
         """Loading the static objects
         Including field, buttons, and more.
         """
         self.field.load_field_urdf(self.cwd)
-        
-        x = p.loadURDF(Utilities.gen_urdf_path("lego/lego.urdf", self.cwd), basePosition=[.95, 0, .2], baseOrientation=[0, .707, 0, .707], globalScaling=4)
-        #p.changeVisualShape(x, -1, rgbaColor=[0.1, 0.1, 0.1, 1])
-        p.changeDynamics(x, -1, contactStiffness=1e6, contactDamping=1e5)
-        
-        x = p.loadURDF(Utilities.gen_urdf_path("lego/lego.urdf", self.cwd), basePosition=[1.1, 0, .2], baseOrientation=[0, .707, 0, .707], globalScaling=4)
-        #p.changeVisualShape(x, -1, rgbaColor=[0.1, 0.1, 0.1, 1])
-        p.changeDynamics(x, -1, contactStiffness=1e6, contactDamping=1e5)
+        self.legos.load_lego_urdfs(self.cwd, [(0, .3, "#ffffffff")])        
 
     def load_agents(self):
         """Loading the agents
