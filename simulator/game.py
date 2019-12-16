@@ -113,9 +113,6 @@ class Game:
             # See below for magic number rationale
             self.field.buttons.update_buttons(1/240)
 
-            # Debugging: safe to remove
-            print(f"buttons state: in_sequence?={self.field.buttons.in_sequence} num_sequenced={self.field.buttons.num_sequenced} extra_sequenced={self.field.buttons.extra_not_sequenced}")
-
             # Steps time by 1/240 seconds
             p.stepSimulation()
             # Sleep for slightly less time to make it seem realitme
