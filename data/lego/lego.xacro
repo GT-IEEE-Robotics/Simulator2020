@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="lego">
+    <!-- Global material for everything -->
+    <material name="white">
+        <color rgba="1 1 1 1"/>
+    </material>
+
+    <!-- Macro for visual and collision boxes -->
+    <!-- Length, width, and height are along X, Y, and Z -->
+    <xacro:macro name="pri_inner" params="x y z l w h">
+        <origin rpy="0 0 0" xyz="${x} ${y} ${z}"/>
+        <geometry>
+            <box size="${l} ${w} ${h}"/>
+        </geometry>
+    </xacro:macro>
+    <!-- Macro to combine the visual and collision box -->
+    <xacro:macro name="pri" params="x y z l w h">
+        <visual>
+            <xacro:pri_inner x="${x}" y="${y}" z="${z}" 
+                             l="${l}" w="${w}" h="${h}"/>
+            <material name="white"/>
+        </visual>
+        <collision>
+            <xacro:pri_inner x="${x}" y="${y}" z="${z}" 
+                             l="${l}" w="${w}" h="${h}"/>
+        </collision>
+    </xacro:macro>
+
+    <!-- Macro for visual and collision cylinders -->
+    <!-- Only need to orient vertically -->
+    <xacro:macro name="cyl_inner" params="x y z r l">
+        <origin rpy="0 0 0" xyz="${x} ${y} ${z}"/>
+        <geometry>
+            <cylinder radius="${r}" length="${l}"/>
+        </geometry>
+    </xacro:macro>
+    <!-- Macro to combine the visual and collision cylinders -->
+    <xacro:macro name="cyl" params="x y z r l">
+        <visual>
+            <xacro:cyl_inner x="${x}" y="${y}" z="${z}" r="${r}" l="${l}"/>
+            <material name="white"/>
+        </visual>
+        <collision>
+            <xacro:cyl_inner x="${x}" y="${y}" z="${z}" r="${r}" l="${l}"/>
+        </collision>
+    </xacro:macro>
+
+    <link name="block">
+        <!-- Top panel -->
+        <xacro:pri x="0"      y="0"      z=".01762" 
+                   l=".03163" w=".03163" h=".00144"/>
+        <!-- Front and back panels -->
+        <xacro:pri x=".015095" y="0"      z=".00845"
+                   l=".00144"  w=".03163" h=".0169"/>
+        <xacro:pri x="-.015095" y="0"      z=".00845"
+                   l=".00144"   w=".03163" h=".0169"/>
+        <!-- Side panels -->
+        <xacro:pri x="0"      y=".015095" z=".00845"
+                   l=".02875" w=".00144"  h=".0169"/>
+        <xacro:pri x="0"      y="-.015095" z=".00845"
+                   l=".02875" w=".00144"   h=".0169"/>
+
+        <!-- Four top studs and the center one -->
+        <xacro:cyl x=".008" y=".008" z=".020935" r=".004695" l=".00519"/>
+        <xacro:cyl x="-.008" y=".008" z=".020935" r=".004695" l=".00519"/>
+        <xacro:cyl x=".008" y="-.008" z=".020935" r=".004695" l=".00519"/>
+        <xacro:cyl x="-.008" y="-.008" z=".020935" r=".004695" l=".00519"/>
+        <xacro:cyl x="0" y="0" z=".00845" r=".006575" l=".0169"/>
+
+        <!-- The eight braces on the bottom part -->
+        <xacro:pri x=".013535" y=".00799" z=".00845"
+                   l=".00168"  w=".00131" h=".0169"/>
+        <xacro:pri x=".013535" y="-.00799" z=".00845"
+                   l=".00168"  w=".00131"  h=".0169"/>
+        <xacro:pri x="-.013535" y=".00799" z=".00845"
+                   l=".00168"   w=".00131" h=".0169"/>
+        <xacro:pri x="-.013535" y="-.00799" z=".00845"
+                   l=".00168"   w=".00131"  h=".0169"/>
+        <xacro:pri x=".00799" y=".013535" z=".00845"
+                   l=".00131" w=".00168"  h=".0169"/>
+        <xacro:pri x="-.00799" y=".013535" z=".00845"
+                   l=".00131"  w=".00168"  h=".0169"/>
+        <xacro:pri x=".00799" y="-.013535" z=".00845"
+                   l=".00131" w=".00168"   h=".0169"/>
+        <xacro:pri x="-.00799" y="-.013535" z=".00845"
+                   l=".00131"  w=".00168"   h=".0169"/>
+
+        <!-- Inertia is an approximation for now -->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 ${.02209/2}"/>
+            <xacro:property name="m" value="${4000 * .03163 * .03163 * .02209}"/>
+            <mass value="${m}"/>
+            <inertia ixx="${1/12 * m * (.03163*.03163 + .02209*.02209)}"
+                     iyy="${1/12 * m * (.03163*.03163 + .02209*.02209)}"
+                     izz="${1/12 * m * (2*.03163*.03163)}"
+                     ixy="0" ixz="0" iyz="0"/>
+        </inertial>
+    </link>
+</robot>

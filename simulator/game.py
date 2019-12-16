@@ -9,9 +9,11 @@ import os
 import time
 import pybullet as p
 
-from simulator.field import Field
 from simulator.racecar_agent import RacecarAgent
+from simulator.field import Field
+from simulator.legos import Legos
 
+from simulator.utilities import Utilities
 
 class Game:
     """Maintains and coordinates the game loop"""
@@ -34,12 +36,14 @@ class Game:
 
         self.agent = RacecarAgent()
         self.field = Field()
+        self.legos = Legos()
 
     def load_statics(self):
         """Loading the static objects
         Including field, buttons, and more.
         """
         self.field.load_field_urdf(self.cwd)
+        self.legos.load_lego_urdfs(self.cwd, [(0, .3, "#ffffff")])        
 
     def load_agents(self):
         """Loading the agents
@@ -117,4 +121,4 @@ class Game:
             p.stepSimulation()
             # Sleep for slightly less time to make it seem realitme
             # Fudge factor experimentally determined
-            time.sleep(1/240 - .0002)
+            time.sleep(1/240 - 1/240)
