@@ -33,6 +33,7 @@ class Game:
 
         #for video recording (works best on Mac and Linux, not well on Windows)
         #p.startStateLogging(p.STATE_LOGGING_VIDEO_MP4, "racecar.mp4")
+        p.setRealTimeSimulation(1)
 
         self.agent = RacecarAgent()
         self.field = Field()
@@ -117,8 +118,8 @@ class Game:
             # See below for magic number rationale
             self.field.buttons.update_buttons(1/240)
 
-            # Steps time by 1/240 seconds
-            p.stepSimulation()
-            # Sleep for slightly less time to make it seem realitme
-            # Fudge factor experimentally determined
-            time.sleep(1/240 - 1/240)
+            # # Steps time by 1/240 seconds
+            # p.stepSimulation()
+            # # Sleep for slightly less time to make it seem realitme
+            # # Fudge factor experimentally determined
+            # time.sleep(1/240 - 1/240)
