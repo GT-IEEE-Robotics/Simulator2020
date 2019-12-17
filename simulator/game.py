@@ -12,8 +12,8 @@ import pybullet as p
 from simulator.racecar_agent import RacecarAgent
 from simulator.field import Field
 from simulator.legos import Legos
-
 from simulator.utilities import Utilities
+from simulator.trainingbot_agent import TrainingBotAgent
 
 class Game:
     """Maintains and coordinates the game loop"""
@@ -35,7 +35,7 @@ class Game:
         #p.startStateLogging(p.STATE_LOGGING_VIDEO_MP4, "racecar.mp4")
         p.setRealTimeSimulation(1)
 
-        self.agent = RacecarAgent()
+        self.agent = TrainingBotAgent()
         self.field = Field()
         self.legos = Legos()
 
@@ -43,20 +43,20 @@ class Game:
         """Loading the static objects
         Including field, buttons, and more.
         """
-        self.field.load_field_urdf(self.cwd)
+        self.field.load_urdf(self.cwd)
         self.legos.load_lego_urdfs(self.cwd, [(0, .3, "#ffffff")])        
 
     def load_agents(self):
         """Loading the agents
         Including the button robot and the mobile block stacking robot.
         """
-        self.agent.load_racecar_urdf(self.cwd)
+        self.agent.load_urdf(self.cwd)
 
     def load_ui(self):
         """Loading the UI components
         Such as sliders or buttons.
         """
-        self.maxForceSlider = p.addUserDebugParameter("maxForce", 0, 50, 20)
+        self.maxForceSlider = p.addUserDebugParameter("maxForce", 0, 5, 1)
 
     def read_ui(self):
         """Reads the UI components' state
@@ -70,19 +70,22 @@ class Game:
         And publishes them for all of game to process
         """
         keys = p.getKeyboardEvents()
-        if keys.get(65297): #up
-            self.agent.increaseTargetVel()
-        elif keys.get(65298): #down
-            self.agent.decreaseTargetVel()
-        else:
-            self.agent.normalizeTargetVel()
 
         if keys.get(65296): #right
-            self.agent.increaseRightSteering()
+            self.agent.increaseRTargetVel()
+            self.agent.decreaseLTargetVel()
         elif keys.get(65295): #left
-            self.agent.increaseLeftSteering()
+            self.agent.increaseLTargetVel()
+            self.agent.decreaseRTargetVel()
+        elif keys.get(65297): #up
+            self.agent.increaseLTargetVel()
+            self.agent.increaseRTargetVel()
+        elif keys.get(65298): #down
+            self.agent.decreaseLTargetVel()
+            self.agent.decreaseRTargetVel()
         else:
-            self.agent.normalizeSteering()
+            self.agent.normalizeLTargetVel()
+            self.agent.normalizeRTargetVel()
 
     def monitor_buttons(self):
         # Store the return values for readability
@@ -113,13 +116,15 @@ class Game:
         while True:
             self.read_ui()
             self.process_keyboard_events()
-            self.monitor_buttons()
-            self.agent.update_racecar()
-            # See below for magic number rationale
-            self.field.buttons.update_buttons(1/240)
+            # self.monitor_buttons()
+            self.agent.update()
+            # self.field.buttons.update(1/240)
+
+            # Debugging: safe to remove
+            # print(f"buttons state: in_sequence?={self.field.buttons.in_sequence} num_sequenced={self.field.buttons.num_sequenced} extra_sequenced={self.field.buttons.extra_not_sequenced}")
 
             # # Steps time by 1/240 seconds
             # p.stepSimulation()
             # # Sleep for slightly less time to make it seem realitme
             # # Fudge factor experimentally determined
-            # time.sleep(1/240 - 1/240)
+            # time.sleep(1/240 - .0002)

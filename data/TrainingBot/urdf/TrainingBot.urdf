@@ -1,0 +1,905 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.5.1-0-g916b5db  Build Version: 1.5.7152.31018
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="TrainingBot">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0 6.93889390390723E-18 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.2487478896" />
+      <inertia
+        ixx="0.00108731765426357"
+        ixy="1.31669577584786E-20"
+        ixz="-7.02237747118861E-20"
+        iyy="0.00216650954413354"
+        iyz="-4.38898591949288E-21"
+        izz="0.00108731765426357" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="base_link_material">
+        <color
+          rgba="0.756 0.604 0.420 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="left_wood_prop_link">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.0038284704333664" />
+      <inertia
+        ixx="1.55456377687415E-07"
+        ixy="4.73951959522331E-23"
+        ixz="1.49490791631222E-22"
+        iyy="9.33313564697618E-07"
+        iyz="-8.99331796208736E-39"
+        izz="8.68793469516912E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/left_wood_prop_link.STL" />
+      </geometry>
+      <material
+        name="left_wood_prop_link_material">
+        <color
+          rgba="0.756 0.604 0.420 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/left_wood_prop_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_wood_prop_joint"
+    type="fixed">
+    <origin
+      xyz="0.0889 -0.012969 0.075044"
+      rpy="3.1416 0 3.1416" />
+    <parent
+      link="base_link" />
+    <child
+      link="left_wood_prop_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="left_motor_mount_link">
+    <inertial>
+      <origin
+        xyz="-0.00100407311454354 0.00877383766048704 0.00402712436635298"
+        rpy="0 0 0" />
+      <mass
+        value="0.00846304493890513" />
+      <inertia
+        ixx="2.89279393533569E-06"
+        ixy="-1.24622077425322E-10"
+        ixz="-6.37724876878601E-10"
+        iyy="2.90019095894266E-06"
+        iyz="-5.52678208926092E-07"
+        izz="7.96294207053633E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/left_motor_mount_link.STL" />
+      </geometry>
+      <material
+        name="left_motor_mount_link_material">
+        <color
+          rgba="0.4 0.4 0.4 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/left_motor_mount_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_motor_mount_joint"
+    type="fixed">
+    <origin
+      xyz="-0.011838 -0.019469 -0.0007163"
+      rpy="0 1.5708 0" />
+    <parent
+      link="left_wood_prop_link" />
+    <child
+      link="left_motor_mount_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="left_motor_link">
+    <inertial>
+      <origin
+        xyz="0.0987259348740435 0.0194246502815318 -0.114196435699102"
+        rpy="0 0 0" />
+      <mass
+        value="0.565454707473237" />
+      <inertia
+        ixx="0.0019096576825044"
+        ixy="0.000258442184179706"
+        ixz="-9.66227920118916E-07"
+        iyy="0.00417835606642326"
+        iyz="1.4674385288499E-05"
+        izz="0.00280904792782018" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/left_motor_link.STL" />
+      </geometry>
+      <material
+        name="left_motor_link_material">
+        <color
+          rgba="0.3 0.3 0.3 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/left_motor_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_motor_joint"
+    type="fixed">
+    <origin
+      xyz="-0.001 -0.001 -0.012417"
+      rpy="3.1416 0 3.1416" />
+    <parent
+      link="left_motor_mount_link" />
+    <child
+      link="left_motor_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="left_plastic_wheel_link">
+    <inertial>
+      <origin
+        xyz="5.98353229203374E-05 1.66611775014903E-06 -6.92626139775498E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.00930111102814003" />
+      <inertia
+        ixx="8.80270973746616E-06"
+        ixy="-1.38331953233325E-11"
+        ixz="-1.53641037444888E-12"
+        iyy="4.44911127134219E-06"
+        iyz="3.15853111289941E-12"
+        izz="4.4452911773099E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/left_plastic_wheel_link.STL" />
+      </geometry>
+      <material
+        name="left_plastic_wheel_link_material">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/left_plastic_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_plastic_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="0 0 0.0085749"
+      rpy="3.1416 -1.5708 0" />
+    <parent
+      link="left_motor_link" />
+    <child
+      link="left_plastic_wheel_link" />
+    <axis
+      xyz="0.99998 0 -0.0059159" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="left_rubber_wheel_link">
+    <inertial>
+      <origin
+        xyz="-0.12277131595691 0.0194246502815318 -0.0987259348740435"
+        rpy="0 0 0" />
+      <mass
+        value="0.565454707473237" />
+      <inertia
+        ixx="0.00280904792782018"
+        ixy="1.4674385288499E-05"
+        ixz="9.66227920118938E-07"
+        iyy="0.00417835606642326"
+        iyz="-0.000258442184179706"
+        izz="0.0019096576825044" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/left_rubber_wheel_link.STL" />
+      </geometry>
+      <material
+        name="left_rubber_wheel_link_material">
+        <color
+          rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/left_rubber_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_rubber_wheel_joint"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="left_plastic_wheel_link" />
+    <child
+      link="left_rubber_wheel_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="right_wood_prop_link">
+    <inertial>
+      <origin
+        xyz="0 -3.46944695195361E-18 -2.77555756156289E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.0038284704333664" />
+      <inertia
+        ixx="1.55456377687415E-07"
+        ixy="-2.42645417401871E-23"
+        ixz="4.91675617734335E-21"
+        iyy="9.3331356469762E-07"
+        iyz="2.58302098591945E-24"
+        izz="8.68793469516915E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/right_wood_prop_link.STL" />
+      </geometry>
+      <material
+        name="right_wood_prop_link_material">
+        <color
+          rgba="0.756 0.604 0.420 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/right_wood_prop_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_wood_prop_joint"
+    type="fixed">
+    <origin
+      xyz="-0.0889 -0.012969 0.075044"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="right_wood_prop_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="right_motor_mount_link">
+    <inertial>
+      <origin
+        xyz="-0.0010041 -0.0087738 -0.0040271"
+        rpy="0 0 0" />
+      <mass
+        value="0.008463" />
+      <inertia
+        ixx="2.8928E-06"
+        ixy="1.2462E-10"
+        ixz="6.3772E-10"
+        iyy="2.9002E-06"
+        iyz="-5.5268E-07"
+        izz="7.9629E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/right_motor_mount_link.STL" />
+      </geometry>
+      <material
+        name="right_motor_mount_link_material">
+        <color
+          rgba="0.4 0.4 0.4 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/right_motor_mount_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_motor_mount_joint"
+    type="fixed">
+    <origin
+      xyz="-0.011838 -0.019469 -0.0007163"
+      rpy="3.1416 1.5708 0" />
+    <parent
+      link="right_wood_prop_link" />
+    <child
+      link="right_motor_mount_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="right_motor_link">
+    <inertial>
+      <origin
+        xyz="-0.0992933348740457 -0.0194246502815318 0.112112416386536"
+        rpy="0 0 0" />
+      <mass
+        value="0.565454707473237" />
+      <inertia
+        ixx="0.0019096576825044"
+        ixy="0.000258442184179707"
+        ixz="9.66227920119005E-07"
+        iyy="0.00417835606642326"
+        iyz="-1.4674385288499E-05"
+        izz="0.00280904792782018" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/right_motor_link.STL" />
+      </geometry>
+      <material
+        name="right_motor_link_material">
+        <color
+          rgba="0.3 0.3 0.3 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/right_motor_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_motor_joint"
+    type="fixed">
+    <origin
+      xyz="-0.001 0.001 0.012417"
+      rpy="3.1416 0 3.1416" />
+    <parent
+      link="right_motor_mount_link" />
+    <child
+      link="right_motor_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="right_plastic_wheel_link">
+    <inertial>
+      <origin
+        xyz="5.98353229203097E-05 1.66611775017679E-06 -6.9262614033061E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.00930111102814002" />
+      <inertia
+        ixx="8.8027097374662E-06"
+        ixy="-1.38331953250642E-11"
+        ixz="-1.53641034480395E-12"
+        iyy="4.44911127134219E-06"
+        iyz="3.15853111876688E-12"
+        izz="4.44529117730995E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/right_plastic_wheel_link.STL" />
+      </geometry>
+      <material
+        name="right_plastic_wheel_link_material">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/right_plastic_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_plastic_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="0 0 -0.0085749"
+      rpy="3.1416 1.5708 0" />
+    <parent
+      link="right_motor_link" />
+    <child
+      link="right_plastic_wheel_link" />
+    <axis
+      xyz="-0.99998 0 0.0059159" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="right_rubber_wheel_link">
+    <inertial>
+      <origin
+        xyz="-0.120687296644344 0.0194246502815318 0.0992933348740457"
+        rpy="0 0 0" />
+      <mass
+        value="0.565454707473237" />
+      <inertia
+        ixx="0.00280904792782018"
+        ixy="-1.4674385288499E-05"
+        ixz="9.66227920118893E-07"
+        iyy="0.00417835606642326"
+        iyz="0.000258442184179706"
+        izz="0.0019096576825044" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/right_rubber_wheel_link.STL" />
+      </geometry>
+      <material
+        name="right_rubber_wheel_link_material">
+        <color
+          rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/right_rubber_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_rubber_wheel_joint"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="right_plastic_wheel_link" />
+    <child
+      link="right_rubber_wheel_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="arduino_link">
+    <inertial>
+      <origin
+        xyz="-0.00443555226377786 0.00345891465498817 0.000485794062924864"
+        rpy="0 0 0" />
+      <mass
+        value="0.0190084033832232" />
+      <inertia
+        ixx="4.64771829337766E-06"
+        ixy="2.58977175570132E-07"
+        ixz="-6.93407495364968E-07"
+        iyy="1.23120623971968E-05"
+        iyz="3.09871889807544E-08"
+        izz="7.97997303275591E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/arduino_link.STL" />
+      </geometry>
+      <material
+        name="arduino_link_material">
+        <color
+          rgba="0.2 0.2 0.9 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/arduino_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="arduino_joint"
+    type="fixed">
+    <origin
+      xyz="-0.019555 0.007 -0.021225"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="arduino_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="caster_base_link">
+    <inertial>
+      <origin
+        xyz="4.33680868994202E-18 -0.00461235480768706 5.20417042793042E-18"
+        rpy="0 0 0" />
+      <mass
+        value="0.0718918458719362" />
+      <inertia
+        ixx="2.22114855393648E-05"
+        ixy="2.46934823397865E-22"
+        ixz="1.08179714485451E-21"
+        iyy="3.43922451251571E-05"
+        iyz="8.46459463501254E-22"
+        izz="1.33179118339447E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/caster_base_link.STL" />
+      </geometry>
+      <material
+        name="caster_base_link_material">
+        <color
+          rgba="0.3 0.3 0.3 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/caster_base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="caster_base_joint"
+    type="fixed">
+    <origin
+      xyz="0 -0.007 -0.081756"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="caster_base_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="caster_swivel_link">
+    <inertial>
+      <origin
+        xyz="4.64515692301113E-05 -0.0137748906438571 0.00528858596116275"
+        rpy="0 0 0" />
+      <mass
+        value="0.0336017326893111" />
+      <inertia
+        ixx="5.44652234768263E-06"
+        ixy="4.81357605898857E-10"
+        ixz="-5.41361212425829E-10"
+        iyy="7.9693825309088E-06"
+        iyz="9.71132693168846E-07"
+        izz="6.54332173331282E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/caster_swivel_link.STL" />
+      </geometry>
+      <material
+        name="caster_swivel_link_material">
+        <color
+          rgba="0.3 0.3 0.3 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/caster_swivel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="caster_swivel_joint"
+    type="continuous">
+    <origin
+      xyz="0 -0.010762 0"
+      rpy="0 0 0" />
+    <parent
+      link="caster_base_link" />
+    <child
+      link="caster_swivel_link" />
+    <axis
+      xyz="0 -1 0" />
+  </joint>
+  <link
+    name="caster_wheel_link">
+    <inertial>
+      <origin
+        xyz="1.73472347597681E-18 0 -8.67361737988404E-19"
+        rpy="0 0 0" />
+      <mass
+        value="0.0465242519636442" />
+      <inertia
+        ixx="1.43611266063729E-05"
+        ixy="-2.7969027918337E-23"
+        ixz="3.42979169280632E-22"
+        iyy="9.47931108063192E-06"
+        iyz="2.51004096703023E-23"
+        izz="9.47931108063192E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/caster_wheel_link.STL" />
+      </geometry>
+      <material
+        name="caster_wheel_link_material">
+        <color
+          rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/caster_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="caster_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="0 -0.033338 0.017463"
+      rpy="0 0 0" />
+    <parent
+      link="caster_swivel_link" />
+    <child
+      link="caster_wheel_link" />
+    <axis
+      xyz="-1 0 0" />
+  </joint>
+  <link
+    name="camera_mount_link">
+    <inertial>
+      <origin
+        xyz="3.296E-17 0.0080041 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.00053078" />
+      <inertia
+        ixx="3.2986E-08"
+        ixy="-2.8652E-23"
+        ixz="9.3366E-24"
+        iyy="9.1496E-08"
+        iyz="3.6886E-24"
+        izz="1.1836E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/camera_mount_link.STL" />
+      </geometry>
+      <material
+        name="camera_mount_link_material">
+        <color
+          rgba="0.75294 0.3 0.3 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/camera_mount_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="camera_mount_joint"
+    type="fixed">
+    <origin
+      xyz="0.00069553 0.0069986 0.11023"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="camera_mount_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="camera_link">
+    <inertial>
+      <origin
+        xyz="1.4205E-05 0.0097834 -1.8556E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.010505" />
+      <inertia
+        ixx="1.0353E-06"
+        ixy="1.1731E-09"
+        ixz="-1.5327E-09"
+        iyy="8.7273E-07"
+        iyz="-1.5361E-09"
+        izz="1.0382E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/camera_link.STL" />
+      </geometry>
+      <material
+        name="camera_link">
+        <color
+          rgba="0.3 0.3 0.3 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="../meshes/camera_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="camera_joint"
+    type="fixed">
+    <origin
+      xyz="0 0.020713 -0.003936"
+      rpy="1.7499 0 0" />
+    <parent
+      link="camera_mount_link" />
+    <child
+      link="camera_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+</robot>
