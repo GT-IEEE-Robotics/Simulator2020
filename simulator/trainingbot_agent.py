@@ -34,9 +34,9 @@ class TrainingBotAgent:
         p.setJointMotorControlArray(self.robot, self.caster_links, p.VELOCITY_CONTROL, targetVelocities=[100000, 100000], forces=[0, 0])
 
 
-        print("num_joints", p.getNumJoints(self.robot))
-        for i in range(p.getNumJoints(self.robot)):
-            print(p.getJointInfo(self.robot, i))
+        # print("num_joints", p.getNumJoints(self.robot))
+        # for i in range(p.getNumJoints(self.robot)):
+        #     print(p.getJointInfo(self.robot, i))
         
         # print(p.getLinkState(self.robot, 15))
         # print('\n')
