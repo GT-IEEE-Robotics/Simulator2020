@@ -3,3 +3,4 @@ pythonvenv/
 .vs/
 .vscode/
 .DS_Store
+*.egg-info
