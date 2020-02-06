@@ -12,8 +12,9 @@ import pybullet as p
 class Utilities:
     """Utility class to convert between units of measure"""
 
-    def gen_urdf_path(urdf_fname, cwd):
-        return os.path.join(cwd, "data", urdf_fname)
+    def gen_urdf_path(urdf_fname):
+        _SIM_ROOT = os.path.abspath(os.path.dirname(__file__))
+        return os.path.join(_SIM_ROOT, "..", "data", urdf_fname)
 
     def add_debug_pose(position=np.array([0,0,0]),
                         orientation=np.array([0,0,0,1]),

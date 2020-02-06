@@ -39,7 +39,7 @@ class Legos:
         """Returns `__str__` for easy debugging."""
         return str(self)
 
-    def load_lego_urdfs(self, cwd : str, blocks : List[Tuple[float, float, str]]) -> None:
+    def load_lego_urdfs(self, blocks: List[Tuple[float, float, str]]) -> None:
         """Loads the blocks specified in the list.
         Takes in a list of x and y positions, as well as the rgb color to 
         make the blocks, and loads them upright into the play field. Also 
@@ -72,7 +72,7 @@ class Legos:
 
             # Load the block
             b_id = p.loadURDF(
-                fileName = Utilities.gen_urdf_path("lego/lego.urdf", cwd),
+                fileName = Utilities.gen_urdf_path("lego/lego.urdf"),
                 basePosition = [b_x, b_y, Legos.SPAWN_HEIGHT])
             # Change its color with white specular
             p.changeVisualShape(

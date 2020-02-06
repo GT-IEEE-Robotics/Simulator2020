@@ -16,17 +16,17 @@ class Field:
         """Sets up the electrical components of the field"""
         self.buttons = Buttons()
 
-    def load_urdf(self, cwd):
+    def load_urdf(self):
         """Load the URDF of the field into the environment
 
         The field URDF comes with its own dimensions and
         textures, collidables. Note that this also calls 
         the method responsible for setting button joint IDs.
         """
-        self.model_id = p.loadURDF(Utilities.gen_urdf_path("field/field.urdf", cwd), useFixedBase=True)
+        self.model_id = p.loadURDF(Utilities.gen_urdf_path("field/field.urdf"), useFixedBase=True)
         # Load the texture as well
         # Not done automatically for some reason
-        p.changeVisualShape(self.model_id, -1, textureUniqueId=p.loadTexture(Utilities.gen_urdf_path("field/field.png", cwd)))
+        p.changeVisualShape(self.model_id, -1, textureUniqueId=p.loadTexture(Utilities.gen_urdf_path("field/field.png")))
         self.buttons.populate_joint_ids([1, 3, 5, 7, 9, 11, 13, 15, 17, 19])
 
         # TODO: replace with setJointMotorControlArray

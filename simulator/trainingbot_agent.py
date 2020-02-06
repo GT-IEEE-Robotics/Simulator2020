@@ -24,13 +24,13 @@ class TrainingBotAgent:
         self.velocity_limit = 5
         self.ltarget_vel, self.rtarget_vel = 0, 0
 
-    def load_urdf(self, cwd):
+    def load_urdf(self):
         """Load the URDF of the trainingbot into the environment
 
         The trainingbot URDF comes with its own dimensions and
         textures, collidables.
         """
-        self.robot = p.loadURDF(Utilities.gen_urdf_path("TrainingBot/urdf/TrainingBot.urdf", cwd), [-0.93, 0, 0.1], [0.5, 0.5, 0.5, 0.5], useFixedBase=False)
+        self.robot = p.loadURDF(Utilities.gen_urdf_path("TrainingBot/urdf/TrainingBot.urdf"), [-0.93, 0, 0.1], [0.5, 0.5, 0.5, 0.5], useFixedBase=False)
         p.setJointMotorControlArray(self.robot, self.caster_links, p.VELOCITY_CONTROL, targetVelocities=[100000, 100000], forces=[0, 0])
 
     def increaseLTargetVel(self):

@@ -43,14 +43,14 @@ class Game:
         """Loading the static objects
         Including field, buttons, and more.
         """
-        self.field.load_urdf(self.cwd)
-        self.legos.load_lego_urdfs(self.cwd, [(0, .3, "#ffffff")])        
+        self.field.load_urdf()
+        self.legos.load_lego_urdfs([(0, .3, "#ffffff")])
 
     def load_agents(self):
         """Loading the agents
         Including the button robot and the mobile block stacking robot.
         """
-        self.agent.load_urdf(self.cwd)
+        self.agent.load_urdf()
 
     def load_ui(self):
         """Loading the UI components

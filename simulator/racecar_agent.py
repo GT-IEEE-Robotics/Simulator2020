@@ -22,14 +22,14 @@ class RacecarAgent:
         self.motion_delta = motion_delta
         self.max_force = 20
 
-    def load_urdf(self, cwd):
+    def load_urdf(self):
         """Load the URDF of the racecar into the environment
 
         The racecar URDF comes with its own dimensions and
         textures, collidables.
         """
         # Load robot
-        self.car = p.loadURDF(Utilities.gen_urdf_path("racecar/racecar_differential.urdf", cwd), [0, 0, 0.5], useFixedBase=False, globalScaling=0.5)
+        self.car = p.loadURDF(Utilities.gen_urdf_path("racecar/racecar_differential.urdf"), [0, 0, 0.5], useFixedBase=False, globalScaling=0.5)
         for wheel in range(p.getNumJoints(self.car)):
             p.setJointMotorControl2(self.car, wheel, p.VELOCITY_CONTROL, targetVelocity=0, force=0)
             p.getJointInfo(self.car, wheel)
