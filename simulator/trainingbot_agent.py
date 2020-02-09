@@ -33,6 +33,16 @@ class TrainingBotAgent:
         self.robot = p.loadURDF(Utilities.gen_urdf_path("TrainingBot/urdf/TrainingBot.urdf"), [-0.93, 0, 0.1], [0.5, 0.5, 0.5, 0.5], useFixedBase=False)
         p.setJointMotorControlArray(self.robot, self.caster_links, p.VELOCITY_CONTROL, targetVelocities=[100000, 100000], forces=[0, 0])
 
+    def get_pose(self):
+        # TODO - fix orientation
+        pos, ort = p.getBasePositionAndOrientation(self.robot)
+        return (pos[0], pos[1], 0.0)
+
+    def set_pose(self, pose):
+        # TODO - fix orientation
+        p.resetBasePositionAndOrientation([pose[0], pose[1], 0.1], [0.5, 0.5, 0.5, 0.5])
+        return self.get_pose()
+
     def increaseLTargetVel(self):
         self.ltarget_vel += self.motion_delta
         if self.ltarget_vel >= self.velocity_limit:
@@ -42,12 +52,6 @@ class TrainingBotAgent:
         self.ltarget_vel -= self.motion_delta
         if self.ltarget_vel <= -self.velocity_limit:
             self.ltarget_vel = -self.velocity_limit
-
-    def normalizeLTargetVel(self):
-        if self.ltarget_vel < 0:
-            self.ltarget_vel += self.motion_delta
-        elif self.ltarget_vel > 0:
-            self.ltarget_vel -= self.motion_delta
 
     def increaseRTargetVel(self):
         self.rtarget_vel += self.motion_delta
@@ -59,19 +63,19 @@ class TrainingBotAgent:
         if self.rtarget_vel <= -self.velocity_limit:
             self.rtarget_vel = -self.velocity_limit
 
-    def normalizeRTargetVel(self):
-        if self.rtarget_vel < 0:
-            self.rtarget_vel += self.motion_delta
-        elif self.rtarget_vel > 0:
-            self.rtarget_vel -= self.motion_delta
-
     def set_max_force(self, max_force):
         self.max_force = max_force
 
-    def update(self):
-        # Movement
-        p.setJointMotorControlArray(self.robot, self.motor_links, p.VELOCITY_CONTROL, targetVelocities=[self.rtarget_vel, self.ltarget_vel], forces=[self.max_force, self.max_force])
+    def read_wheel_velocities(self):
+        # TODO - implement this
+        return (self.rtarget_vel, self.ltarget_vel)
 
+    def command_wheel_velocities(self, rtarget_vel, ltarget_vel):
+        self.rtarget_vel = rtarget_vel
+        self.ltarget_vel = ltarget_vel
+        return self.read_wheel_velocities()
+
+    def capture_image(self):
         # Camera
         *_, camera_position, camera_orientation = p.getLinkState(self.robot, self.camera_link)
         camera_look_position, _ = p.multiplyTransforms(camera_position, camera_orientation, [0,0.1,0], [0,0,0,1])
@@ -84,4 +88,9 @@ class TrainingBotAgent:
           aspect=1.0,
           nearVal=0.1,
           farVal=3.1)
-        p.getCameraImage(300, 300, view_matrix, projection_matrix, renderer=p.ER_BULLET_HARDWARE_OPENGL)
+        return p.getCameraImage(300, 300, view_matrix, projection_matrix, renderer=p.ER_BULLET_HARDWARE_OPENGL)[2]
+
+    def step(self):
+        p.setJointMotorControlArray(self.robot, self.motor_links, p.VELOCITY_CONTROL,
+                                    targetVelocities=[self.rtarget_vel + 1, self.ltarget_vel + 1],
+                                    forces=[self.max_force, self.max_force])
