@@ -2,7 +2,7 @@
 """
 File:          Game.py
 Author:        Alex Cui
-Last Modified: Binit on 10/30
+Last Modified: Binit on 2/15
 """
 
 import os
@@ -12,6 +12,7 @@ import pybullet as p
 from simulator.field import Field
 from simulator.legos import Legos
 from simulator.trainingbot_agent import TrainingBotAgent
+from simulator.utilities import Utilities
 
 class Game:
     """Maintains information of one 3 minute round"""
@@ -71,7 +72,7 @@ class Game:
             p.startStateLogging(p.STATE_LOGGING_VIDEO_MP4, os.join(self.log_dir, "log.mp4"))
         p.setRealTimeSimulation(1 if self.is_interactive_realtime else 0)
 
-        self.mobile_agent = TrainingBotAgent()
+        self.mobile_agent = TrainingBotAgent(left_skew=1.0, right_skew=1.0)
         self.field = Field()
         self.legos = Legos()
 
@@ -161,6 +162,8 @@ class Game:
         if self.use_interactive and self.is_interactive_realtime:
             self.prev = time.time()
 
+        self.info_id = Utilities.draw_debug_info(self.time)
+
     def reset(self):
         p.restoreState(self.starting_state)
         self.time = self.starting_time
@@ -174,11 +177,17 @@ class Game:
             now = time.time()
             self.time += now - self.prev
             self.prev = now
+            # TODO - use this to figure out the dimensions of vel (rad/s?), wheel pos (arclength m?), and world pose (m)
+            # if self.time - self.starting_time <= 10.0:
+            #     print("velocities ", self.mobile_agent.read_wheel_velocities())
+            #     print("world pose ", self.mobile_agent.get_pose())
             # TODO - log bullet states every 5 seconds iterations
         else:
             self.time += self.TIMESTEPPING_DT
             p.stepSimulation()
             # TODO - log bullet states every 1200 iterations
+
+        self.info_id = Utilities.draw_debug_info(self.time, replaceItemUniqueId=self.info_id)
 
         if not self.hide_ui:
             self.read_ui()

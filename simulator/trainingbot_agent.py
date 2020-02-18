@@ -11,7 +11,7 @@ from simulator.utilities import Utilities
 
 class TrainingBotAgent:
     """The TrainingBotAgent class maintains the trainingbot agent"""
-    def __init__(self, motion_delta=0.5):
+    def __init__(self, motion_delta=0.5, left_skew=0.0, right_skew=0.0):
         """Setups infomation about the agent
         """
         self.camera_link = 15
@@ -23,6 +23,8 @@ class TrainingBotAgent:
         self.motion_delta = motion_delta
         self.velocity_limit = 5
         self.ltarget_vel, self.rtarget_vel = 0, 0
+        self.lskew = left_skew
+        self.rskew = right_skew
 
     def load_urdf(self):
         """Load the URDF of the trainingbot into the environment
@@ -30,6 +32,7 @@ class TrainingBotAgent:
         The trainingbot URDF comes with its own dimensions and
         textures, collidables.
         """
+        # TODO - load closer to the ground, ideally on it.
         self.robot = p.loadURDF(Utilities.gen_urdf_path("TrainingBot/urdf/TrainingBot.urdf"), [-0.93, 0, 0.1], [0.5, 0.5, 0.5, 0.5], useFixedBase=False)
         p.setJointMotorControlArray(self.robot, self.caster_links, p.VELOCITY_CONTROL, targetVelocities=[100000, 100000], forces=[0, 0])
 
@@ -66,9 +69,12 @@ class TrainingBotAgent:
     def set_max_force(self, max_force):
         self.max_force = max_force
 
-    def read_wheel_velocities(self):
-        # TODO - implement this
-        return (self.rtarget_vel, self.ltarget_vel)
+    def read_wheel_velocities(self, noisy=True):
+        # TODO - implement noisy
+        noise = 0.0
+        rmotor, lmotor = p.getJointStates(self.robot, self.motor_links)
+        # print("positions ", rmotor[0], lmotor[0])
+        return (rmotor[1] + noise, lmotor[1] + noise)
 
     def command_wheel_velocities(self, rtarget_vel, ltarget_vel):
         self.rtarget_vel = rtarget_vel
@@ -92,5 +98,5 @@ class TrainingBotAgent:
 
     def step(self):
         p.setJointMotorControlArray(self.robot, self.motor_links, p.VELOCITY_CONTROL,
-                                    targetVelocities=[self.rtarget_vel + 1, self.ltarget_vel + 1],
+                                    targetVelocities=[self.rtarget_vel + self.rskew, self.ltarget_vel + self.lskew],
                                     forces=[self.max_force, self.max_force])

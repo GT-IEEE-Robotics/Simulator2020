@@ -35,6 +35,7 @@ class SimConfig:
         """Validate the current configurations for
         any inconsistencies.
         """
+        # TODO implement
         pass
         
 
@@ -57,7 +58,7 @@ def _sim_server(q, s, sim_config):
     while True:
         if sim_config.is_interactive_realtime or uncompleted_steps > 0:
             g.step()
-            uncompleted_steps -= 1
+            uncompleted_steps -= 1 if uncompleted_steps > 0 else 0
         if q.qsize() == 0: continue
 
         req_token = q.get()
