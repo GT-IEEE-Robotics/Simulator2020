@@ -2,7 +2,7 @@
 """
 File:          trainingbot_agent.py
 Author:        Binit Shah 
-Last Modified: Binit on 12/11
+Last Modified: Binit on 2/20
 """
 
 import pybullet as p
@@ -11,7 +11,7 @@ from simulator.utilities import Utilities
 
 class TrainingBotAgent:
     """The TrainingBotAgent class maintains the trainingbot agent"""
-    def __init__(self, motion_delta=0.5, left_skew=0.0, right_skew=0.0):
+    def __init__(self, motion_delta=0.5, skew=0.0):
         """Setups infomation about the agent
         """
         self.camera_link = 15
@@ -23,8 +23,10 @@ class TrainingBotAgent:
         self.motion_delta = motion_delta
         self.velocity_limit = 5
         self.ltarget_vel, self.rtarget_vel = 0, 0
-        self.lskew = left_skew
-        self.rskew = right_skew
+        self.lskew = abs(skew) + 1 if skew > 0.0 else 1.0
+        self.rskew = abs(skew) + 1 if skew < 0.0 else 1.0
+
+        self.enabled = False
 
     def load_urdf(self):
         """Load the URDF of the trainingbot into the environment
@@ -98,5 +100,5 @@ class TrainingBotAgent:
 
     def step(self):
         p.setJointMotorControlArray(self.robot, self.motor_links, p.VELOCITY_CONTROL,
-                                    targetVelocities=[self.rtarget_vel + self.rskew, self.ltarget_vel + self.lskew],
+                                    targetVelocities=[self.rtarget_vel * self.rskew, self.ltarget_vel * self.lskew] if self.enabled else [0, 0],
                                     forces=[self.max_force, self.max_force])

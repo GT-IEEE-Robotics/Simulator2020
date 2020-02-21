@@ -24,7 +24,8 @@ class Game:
                  topdown_viewport=False,
                  log_dir=None,
                  log_bullet_states=False,
-                 log_mp4=False):
+                 log_mp4=False,
+                 robot_skew=0.0):
         """Sets up simulation elements.
         Two sets of preferences affect how the simulation behaves. Choosing a
         interactive simulation session allows you to interact with the robot
@@ -49,6 +50,8 @@ class Game:
         :param log_mp4:                 when interactive, logs .mp4 video until sim
                                         completes via a graceful stop (corrupts log
                                         if sim ends ungracefully).
+        :param robot_skew:              [-inf, inf] where negative values skew left,
+                                        0 is no skew, and positive skew right
         """
         self.use_interactive = use_interactive
         self.is_interactive_realtime = is_interactive_realtime
@@ -72,7 +75,7 @@ class Game:
             p.startStateLogging(p.STATE_LOGGING_VIDEO_MP4, os.join(self.log_dir, "log.mp4"))
         p.setRealTimeSimulation(1 if self.is_interactive_realtime else 0)
 
-        self.mobile_agent = TrainingBotAgent(left_skew=1.0, right_skew=1.0)
+        self.mobile_agent = TrainingBotAgent(skew=robot_skew)
         self.field = Field()
         self.legos = Legos()
 
@@ -140,13 +143,15 @@ class Game:
               bin_configuration_yaml,
               starting_state_fname=None,
               starting_robot_pose=None,
-              starting_time=0.0):
+              starting_time=0.0,
+              auto_enable_timer=0.0):
         """Setups the game elements.
 
         :param bin_configuration_yaml: the yaml file to read for bin setup.
         :param starting_state_fname:   the starting state file of simulation.
         :param starting_robot_pose:    the starting pose of the mobile robot.
         :param starting_time:          the starting time of the simulation.
+        :param auto_enable_timer:      timer to auto enable robot, 0 disables.
         """
         self.load_environment(bin_configuration_yaml)
         self.load_agents(initial_mobile_pose=starting_robot_pose)
@@ -156,6 +161,10 @@ class Game:
         if starting_state_fname:
             p.restoreState(fileName=starting_state_fname)
         self.starting_state = p.saveState()
+
+        self.initial_auto_enable_timer = auto_enable_timer
+        self.auto_enable_timer = self.initial_auto_enable_timer
+        self.auto_enabled = False
 
         self.starting_time = starting_time
         self.time = self.starting_time
@@ -167,6 +176,8 @@ class Game:
     def reset(self):
         p.restoreState(self.starting_state)
         self.time = self.starting_time
+        self.auto_enable_timer = self.initial_auto_enable_timer
+        self.auto_enabled = False
         return self.time
 
     def step(self):
@@ -176,6 +187,11 @@ class Game:
         if self.use_interactive and self.is_interactive_realtime:
             now = time.time()
             self.time += now - self.prev
+            if not self.auto_enabled and self.auto_enable_timer > 0.0:
+                self.auto_enable_timer -= now - self.prev
+                if self.auto_enable_timer <= 0.0:
+                    self.mobile_agent.enabled = True
+                    self.auto_enabled = True
             self.prev = now
             # TODO - use this to figure out the dimensions of vel (rad/s?), wheel pos (arclength m?), and world pose (m)
             # if self.time - self.starting_time <= 10.0:
@@ -184,6 +200,11 @@ class Game:
             # TODO - log bullet states every 5 seconds iterations
         else:
             self.time += self.TIMESTEPPING_DT
+            if not self.auto_enabled and self.auto_enable_timer > 0.0:
+                self.auto_enable_timer -= self.TIMESTEPPING_DT
+                if self.auto_enable_timer <= 0.0:
+                    self.mobile_agent.enabled = True
+                    self.auto_enabled = True
             p.stepSimulation()
             # TODO - log bullet states every 1200 iterations
 
@@ -191,7 +212,7 @@ class Game:
 
         if not self.hide_ui:
             self.read_ui()
-        if self.use_interactive:
+        if self.use_interactive and self.mobile_robot.enabled:
             self.process_keyboard_events()
 
         self.monitor_buttons()

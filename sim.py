@@ -10,6 +10,7 @@ SRTIME = 3
 SRIMAGE = 4
 SRPOSE = 5
 SRWHEELS = 6
+SRENABLED = 7
 
 class SimConfig:
     def __init__(self, bin_configuration_yaml):
@@ -26,6 +27,8 @@ class SimConfig:
         self.starting_state_fname = None
         self.starting_robot_pose = None
         self.starting_time = 0.0
+        self.auto_enable_timer = 0.0
+        self.skew = 0.0
 
         self.log_dir = None
         self.log_bullet_states = False
@@ -48,11 +51,13 @@ def _sim_server(q, s, sim_config):
              topdown_viewport=sim_config.topdown_viewport,
              log_dir=sim_config.log_dir,
              log_bullet_states=sim_config.log_bullet_states,
-             log_mp4=sim_config.log_mp4)
+             log_mp4=sim_config.log_mp4,
+             robot_skew=sim_config.skew)
     g.setup(bin_configuration_yaml=sim_config.bin_configuration_yaml,
             starting_state_fname=sim_config.starting_state_fname,
             starting_robot_pose=sim_config.starting_robot_pose,
-            starting_time=sim_config.starting_time)
+            starting_time=sim_config.starting_time,
+            auto_enable_timer=sim_config.auto_enable_timer)
 
     uncompleted_steps = 0
     while True:
@@ -72,8 +77,10 @@ def _sim_server(q, s, sim_config):
             elif req_token[0] == SRPOSE:
                 s.put(g.mobile_agent.set_pose(req_token[1]))
             elif req_token[0] == SRWHEELS:
-                print(req_token[1], req_token[2])
                 s.put(g.mobile_agent.command_wheel_velocities(req_token[1], req_token[2]))
+            elif req_token[0] == SRENABLED:
+                g.mobile_agent.enabled = req_token[1]
+                s.put(g.mobile_agent.enabled)
         elif req_token == SRRESET:
             s.put(g.reset())
         elif req_token == SREND:
@@ -87,6 +94,8 @@ def _sim_server(q, s, sim_config):
             s.put(g.mobile_agent.get_pose())
         elif req_token == SRWHEELS:
             s.put(g.mobile_agent.read_wheel_velocities())
+        elif req_token == SRENABLED:
+            s.put(g.mobile_agent.enabled)
         else:
             print("simserver, something new came: ", req_token)
 
@@ -134,6 +143,12 @@ def read_robot_vels():
 
 def command_robot_vels(lwheel_vel, rwheel_vel):
     return request((SRWHEELS, lwheel_vel, rwheel_vel))
+
+def get_enabled():
+    return request(SRENABLED)
+
+def set_enabled(enabled):
+    return request((SRENABLED, enabled))
 
 '''
 function list
