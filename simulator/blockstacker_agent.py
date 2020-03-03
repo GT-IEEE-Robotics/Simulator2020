@@ -2,16 +2,17 @@
 """
 File:          blockstacker_agent.py
 Author:        Binit Shah 
-Last Modified: Binit on 2/20
+Last Modified: Binit on 3/2
 """
 
 import pybullet as p
 
+from simulator.differentialdrive import DifferentialDrive
 from simulator.utilities import Utilities
 
 class BlockStackerAgent:
     """The BlockStackerAgent class maintains the blockstacker agent"""
-    def __init__(self, motion_delta=0.3, skew=0.0):
+    def __init__(self, vel_delta=0.5, skew=0.0):
         """Setups infomation about the agent
         """
         self.camera_links = [6, 8]
@@ -20,16 +21,11 @@ class BlockStackerAgent:
         self.stepper_link = 1
         self.button_link = 4
         self.caster_link = 18
+        self.tower_link = 2
 
-        # Differential motor control
-        self.max_force = 1
-        self.motion_delta = motion_delta
-        self.velocity_limit = 4
-        self.ltarget_vel, self.rtarget_vel = 0, 0
-        self.lskew = abs(skew) + 1 if skew > 0.0 else 1.0
-        self.rskew = abs(skew) + 1 if skew < 0.0 else 1.0
+        self.drive = DifferentialDrive(self.motor_links, max_force=0.2, vel_limit=6.0, vel_delta=vel_delta, skew=skew)
 
-        self.enabled = False
+        self.enabled = True
         self.blink = 0
         self.blink_count = 0
 
@@ -39,8 +35,8 @@ class BlockStackerAgent:
         The blockstacker URDF comes with its own dimensions and
         textures, collidables.
         """
-        # TODO - load closer to the ground, ideally on it.
-        self.robot = p.loadURDF(Utilities.gen_urdf_path("blockstacker/urdf/blockstacker.urdf"), [0, 0, 0.2], [0, 0, 0.9999383, 0.0111104], useFixedBase=False)
+        self.robot = p.loadURDF(Utilities.gen_urdf_path("blockstacker/urdf/blockstacker.urdf"),
+                                [0, 0, 0.05], [0, 0, 0.9999383, 0.0111104], useFixedBase=False)
 
         p.setJointMotorControlMultiDof(self.robot,
                                        self.caster_link,
@@ -50,6 +46,10 @@ class BlockStackerAgent:
                                        positionGain=0,
                                        velocityGain=1,
                                        force=[0, 0, 0])
+
+        p.setJointMotorControlArray(self.robot, self.flywheel_links, p.VELOCITY_CONTROL,
+                                    targetVelocities=[-2, 2],
+                                    forces=[1, 1])
 
     def get_pose(self):
         # TODO - fix orientation
@@ -61,29 +61,6 @@ class BlockStackerAgent:
         p.resetBasePositionAndOrientation([pose[0], pose[1], 0.1], [0.5, 0.5, 0.5, 0.5])
         return self.get_pose()
 
-    def increaseLTargetVel(self):
-        self.ltarget_vel += self.motion_delta
-        if self.ltarget_vel >= self.velocity_limit:
-            self.ltarget_vel = self.velocity_limit
-
-    def decreaseLTargetVel(self):
-        self.ltarget_vel -= self.motion_delta
-        if self.ltarget_vel <= -self.velocity_limit:
-            self.ltarget_vel = -self.velocity_limit
-
-    def increaseRTargetVel(self):
-        self.rtarget_vel += self.motion_delta
-        if self.rtarget_vel >= self.velocity_limit:
-            self.rtarget_vel = self.velocity_limit
-
-    def decreaseRTargetVel(self):
-        self.rtarget_vel -= self.motion_delta
-        if self.rtarget_vel <= -self.velocity_limit:
-            self.rtarget_vel = -self.velocity_limit
-
-    def set_max_force(self, max_force):
-        self.max_force = max_force
-
     def read_wheel_velocities(self, noisy=True):
         # TODO - implement noisy
         noise = 0.0
@@ -92,8 +69,8 @@ class BlockStackerAgent:
         return (rmotor[1] + noise, lmotor[1] + noise)
 
     def command_wheel_velocities(self, rtarget_vel, ltarget_vel):
-        self.rtarget_vel = rtarget_vel
-        self.ltarget_vel = ltarget_vel
+        self.drive.rtarget_vel = rtarget_vel
+        self.drive.ltarget_vel = ltarget_vel
         return self.read_wheel_velocities()
 
     def capture_image(self):
@@ -112,9 +89,7 @@ class BlockStackerAgent:
         return p.getCameraImage(300, 300, view_matrix, projection_matrix, renderer=p.ER_BULLET_HARDWARE_OPENGL)[2]
 
     def step(self):
-        p.setJointMotorControlArray(self.robot, self.motor_links, p.VELOCITY_CONTROL,
-                                    targetVelocities=[-self.rtarget_vel * self.rskew, self.ltarget_vel * self.lskew] if self.enabled else [0, 0],
-                                    forces=[self.max_force, self.max_force])
+        self.drive.step(self.robot, self.enabled)
 
         if not self.enabled:
             p.changeVisualShape(self.robot, self.button_link, rgbaColor=[1, 1, self.blink, 1])

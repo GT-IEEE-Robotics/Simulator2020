@@ -22,7 +22,7 @@ class Legos:
     """
 
     """The height to spawn the blocks at"""
-    SPAWN_HEIGHT = .06
+    SPAWN_HEIGHT = .3
 
     def __init__(self):
         """Creates an array of all the block ids to be populated.
@@ -54,26 +54,28 @@ class Legos:
             # For readability
             b_x = b[0]
             b_y = b[1]
+            b_z = b[2]
 
             # Check that the color is valid with regex
-            if re.match(r"#[0-9a-f]{6}", b[2]) == None:
+            if re.match(r"#[0-9a-f]{6}", b[3]) == None:
                 raise ValueError("Must have valid rgb hex color")
             # Compute its color
             # We hard code the alpha as it must be exactly 0 or 1
             # From stackoverflow.com/questions/29643352/converting-hex-to-rgb-value-in-python
-            b_color = [int(b[2].lstrip('#')[i:i+2], 16) / 256 for i in (0,2,4)] + [1]
+            b_color = [int(b[3].lstrip('#')[i:i+2], 16) / 256 for i in (0,2,4)] + [1]
 
             # Check that it is valid
             # Basic sanity check that it is in bin area for now
-            if abs(b_x) >= .682625 \
-            or abs(b_y) >= .5715 \
-            or abs(b_y) <= .2667:
-                raise ValueError("Center of lego block not in bin area")
+            # if abs(b_x) >= .682625 \
+            # or abs(b_y) >= .5715 \
+            # or abs(b_y) <= .2667:
+            #     raise ValueError("Center of lego block not in bin area")
 
             # Load the block
             b_id = p.loadURDF(
                 fileName = Utilities.gen_urdf_path("lego/lego.urdf"),
-                basePosition = [b_x, b_y, Legos.SPAWN_HEIGHT])
+                basePosition = [b_x, b_y, b_z],
+                globalScaling=0.9)
             # Change its color with white specular
             p.changeVisualShape(
                 objectUniqueId = b_id,
@@ -82,11 +84,17 @@ class Legos:
                 specularColor = [1,1,1])
             # Change the collision properties so they stick
             # Requires further testing
-            p.changeDynamics(
-                bodyUniqueId = b_id,
-                linkIndex = -1,
-                contactStiffness = 1e6, # Unknown units
-                contactDamping = 1e5) # Unknown units
+            # p.changeDynamics(
+            #     bodyUniqueId = b_id,
+            #     linkIndex = -1,
+            #     contactStiffness = 1e6, # Unknown units
+            #     contactDamping = 1e5) # Unknown units
 
             # Append the block id to the list we are maintaining
             self.block_ids.append(b_id)
+
+    def step(self, robot_id, robot_link_id):
+        for lego_id in self.block_ids:
+            if len(p.getClosestPoints(robot_id, lego_id, 0.004, linkIndexA=robot_link_id)) > 0:
+                self.block_ids.remove(lego_id)
+                p.removeBody(lego_id)

@@ -65,3 +65,7 @@ class Utilities:
                                         replaceItemUniqueId=replaceItemUniqueId)
 
         return m_uid
+
+    def print_multibody_links(body_id):
+        for link_id in range(p.getNumJoints(body_id)):
+            print(p.getJointInfo(body_id, link_id))

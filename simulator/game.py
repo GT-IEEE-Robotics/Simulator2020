@@ -85,7 +85,7 @@ class Game:
         Including field, buttons, and more.
         """
         self.field.load_urdf()
-        # self.legos.load_lego_urdfs([(0, .3, "#ffffff")])
+        self.legos.load_lego_urdfs([(0, -0.3, 0.1, "#00ffff")])
 
     def load_agents(self, initial_mobile_pose=None):
         """Loading the agents
@@ -106,26 +106,7 @@ class Game:
         And publishes them for all of game to process
         """
         maxForce = p.readUserDebugParameter(self.maxForceSlider)
-        self.mobile_agent.set_max_force(maxForce)
-
-    def process_keyboard_events(self):
-        """Read keyboard events
-        And publishes them for all of game to process
-        """
-        keys = p.getKeyboardEvents()
-
-        if keys.get(65296): #right
-            self.mobile_agent.increaseRTargetVel()
-            self.mobile_agent.decreaseLTargetVel()
-        elif keys.get(65295): #left
-            self.mobile_agent.increaseLTargetVel()
-            self.mobile_agent.decreaseRTargetVel()
-        elif keys.get(65297): #up
-            self.mobile_agent.increaseLTargetVel()
-            self.mobile_agent.increaseRTargetVel()
-        elif keys.get(65298): #down
-            self.mobile_agent.decreaseLTargetVel()
-            self.mobile_agent.decreaseRTargetVel()
+        self.mobile_agent.drive.set_max_force(maxForce)
 
     def monitor_buttons(self):
         # Store the return values for readability
@@ -214,7 +195,8 @@ class Game:
         if not self.hide_ui:
             self.read_ui()
         if self.use_interactive and self.mobile_agent.enabled:
-            self.process_keyboard_events()
+            self.mobile_agent.drive.process_keyboard_events(normalize=True)
 
-        self.monitor_buttons()
+        # self.monitor_buttons()
+        self.legos.step(self.mobile_agent.robot, self.mobile_agent.tower_link)
         self.mobile_agent.step()
