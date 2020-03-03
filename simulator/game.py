@@ -12,6 +12,7 @@ import pybullet as p
 from simulator.field import Field
 from simulator.legos import Legos
 from simulator.trainingbot_agent import TrainingBotAgent
+from simulator.blockstacker_agent import BlockStackerAgent
 from simulator.utilities import Utilities
 
 class Game:
@@ -75,7 +76,7 @@ class Game:
             p.startStateLogging(p.STATE_LOGGING_VIDEO_MP4, os.join(self.log_dir, "log.mp4"))
         p.setRealTimeSimulation(1 if self.is_interactive_realtime else 0)
 
-        self.mobile_agent = TrainingBotAgent(skew=robot_skew)
+        self.mobile_agent = BlockStackerAgent(skew=robot_skew)
         self.field = Field()
         self.legos = Legos()
 
@@ -212,7 +213,7 @@ class Game:
 
         if not self.hide_ui:
             self.read_ui()
-        if self.use_interactive and self.mobile_robot.enabled:
+        if self.use_interactive and self.mobile_agent.enabled:
             self.process_keyboard_events()
 
         self.monitor_buttons()

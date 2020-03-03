@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
-     Commit Version: 1.5.1-0-g916b5db  Build Version: 1.5.7152.31018
-     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot
   name="blockstacker">
   <link
@@ -29,9 +26,9 @@
           filename="../meshes/base_link.STL" />
       </geometry>
       <material
-        name="">
+        name="base_link_material">
         <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          rgba="0.2 0.2 0.2 1" />
       </material>
     </visual>
     <collision>
@@ -69,9 +66,9 @@
           filename="../meshes/stepper_motor_link.STL" />
       </geometry>
       <material
-        name="">
+        name="stepper_motor_link_material">
         <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          rgba="0.2 0.2 0.2 1" />
       </material>
     </visual>
     <collision>
@@ -122,9 +119,9 @@
           filename="../meshes/stepper_wheel_link.STL" />
       </geometry>
       <material
-        name="">
+        name="stepper_wheel_link_material">
         <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          rgba="0.4 0.4 0.4 1" />
       </material>
     </visual>
     <collision>
@@ -175,9 +172,9 @@
           filename="../meshes/block_tower_link.STL" />
       </geometry>
       <material
-        name="">
+        name="block_tower_link_material">
         <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          rgba="0.2 0.2 0.2 1" />
       </material>
     </visual>
     <collision>
@@ -228,9 +225,9 @@
           filename="../meshes/jetson_mount_link.STL" />
       </geometry>
       <material
-        name="">
+        name="jetson_mount_link_material">
         <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          rgba="0.2 0.2 0.2 1" />
       </material>
     </visual>
     <collision>
@@ -256,9 +253,22 @@
     <axis
       xyz="0 0 0" />
   </joint>
-
   <link
     name="enable_button_link">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.024" />
+      <inertia
+        ixx="1E-03"
+        ixy="0"
+        ixz="0"
+        iyy="1E-03"
+        iyz="0"
+        izz="1E-03" />
+    </inertial>
     <visual>
       <origin
         xyz="0 0 0"
@@ -267,9 +277,9 @@
         <cylinder length="0.03" radius="0.015"/>
       </geometry>
       <material
-        name="">
+        name="enable_button_link_material">
         <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          rgba="1 1 1 1" />
       </material>
     </visual>
     <collision>
@@ -294,7 +304,6 @@
     <axis
       xyz="0 0 0" />
   </joint>
-
   <link
     name="left_camera_mount_link">
     <inertial>
@@ -320,9 +329,9 @@
           filename="../meshes/left_camera_mount_link.STL" />
       </geometry>
       <material
-        name="">
+        name="left_camera_mount_link_material">
         <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          rgba="0.2 0.2 0.2 1" />
       </material>
     </visual>
     <collision>
@@ -370,12 +379,12 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="../meshes/left_camera_link.STL" />
+          filename="../meshes/left_camera_link.STL" scale="0.001 0.001 0.001" />
       </geometry>
       <material
-        name="">
+        name="left_camera_link_material">
         <color
-          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+          rgba="0 0.4 0 1" />
       </material>
     </visual>
     <collision>
@@ -384,7 +393,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="../meshes/left_camera_link.STL" />
+          filename="../meshes/left_camera_link.STL" scale="0.001 0.001 0.001" />
       </geometry>
     </collision>
   </link>
@@ -392,7 +401,7 @@
     name="left_camera_joint"
     type="fixed">
     <origin
-      xyz="0.015 0.0275000000000001 -0.001451698777701"
+      xyz="0.0276 0.0371 0.002"
       rpy="-1.5707963267949 0 3.14159265358978" />
     <parent
       link="left_camera_mount_link" />
@@ -426,9 +435,9 @@
           filename="../meshes/right_camera_mount_link.STL" />
       </geometry>
       <material
-        name="">
+        name="right_camera_mount_link_material">
         <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          rgba="0.2 0.2 0.2 1" />
       </material>
     </visual>
     <collision>
@@ -476,12 +485,12 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="../meshes/right_camera_link.STL" />
+          filename="../meshes/right_camera_link.STL" scale="0.001 0.001 0.001" />
       </geometry>
       <material
-        name="">
+        name="right_camera_link_material">
         <color
-          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+          rgba="0 0.4 0 1" />
       </material>
     </visual>
     <collision>
@@ -490,7 +499,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="../meshes/right_camera_link.STL" />
+          filename="../meshes/right_camera_link.STL" scale="0.001 0.001 0.001" />
       </geometry>
     </collision>
   </link>
@@ -498,7 +507,7 @@
     name="right_camera_joint"
     type="fixed">
     <origin
-      xyz="0.0150000000000001 0.0275000000000002 -0.001451698777701"
+      xyz="0.0276 0.0371 0.002"
       rpy="-1.5707963267949 0 3.14159265358978" />
     <parent
       link="right_camera_mount_link" />
@@ -532,9 +541,9 @@
           filename="../meshes/left_motor_link.STL" />
       </geometry>
       <material
-        name="">
+        name="left_motor_link_material">
         <color
-          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+          rgba="0.6 0.6 0.6 1" />
       </material>
     </visual>
     <collision>
@@ -585,9 +594,9 @@
           filename="../meshes/left_wheel_link.STL" />
       </geometry>
       <material
-        name="">
+        name="left_wheel_link_material">
         <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          rgba="0.4 0.4 0.4 1" />
       </material>
     </visual>
     <collision>
@@ -638,9 +647,9 @@
           filename="../meshes/right_motor_link.STL" />
       </geometry>
       <material
-        name="">
+        name="right_motor_link_material">
         <color
-          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+          rgba="0.6 0.6 0.6 1" />
       </material>
     </visual>
     <collision>
@@ -691,9 +700,9 @@
           filename="../meshes/right_wheel_link.STL" />
       </geometry>
       <material
-        name="">
+        name="right_wheel_link_material">
         <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          rgba="0.4 0.4 0.4 1" />
       </material>
     </visual>
     <collision>
@@ -744,9 +753,9 @@
           filename="../meshes/left_flywheel_motor_link.STL" />
       </geometry>
       <material
-        name="">
+        name="left_flywheel_motor_link_material">
         <color
-          rgba="0.647058823529412 0.517647058823529 0 1" />
+          rgba="0.6 0.6 0.6 1" />
       </material>
     </visual>
     <collision>
@@ -797,9 +806,9 @@
           filename="../meshes/left_flywheel_link.STL" />
       </geometry>
       <material
-        name="">
+        name="left_flywheel_link_material">
         <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          rgba="0.4 0.4 0.4 1" />
       </material>
     </visual>
     <collision>
@@ -850,9 +859,9 @@
           filename="../meshes/right_flywheel_motor_link.STL" />
       </geometry>
       <material
-        name="">
+        name="right_flywheel_motor_link_material">
         <color
-          rgba="0.647058823529412 0.517647058823529 0 1" />
+          rgba="0.6 0.6 0.6 1" />
       </material>
     </visual>
     <collision>
@@ -903,9 +912,9 @@
           filename="../meshes/right_flywheel_link.STL" />
       </geometry>
       <material
-        name="">
+        name="right_flywheel_link_material">
         <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          rgba="0.4 0.4 0.4 1" />
       </material>
     </visual>
     <collision>
@@ -956,9 +965,9 @@
           filename="../meshes/caster_ball_mount_link.STL" />
       </geometry>
       <material
-        name="">
+        name="caster_ball_mount_link_material">
         <color
-          rgba="0.647058823529412 0.619607843137255 0.584313725490196 1" />
+          rgba="0.2 0.2 0.2 1" />
       </material>
     </visual>
     <collision>
@@ -1005,13 +1014,12 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        
         <sphere radius="0.011"/>
       </geometry>
       <material
-        name="">
+        name="caster_ball_link_material">
         <color
-          rgba="0.647058823529412 0.619607843137255 0.584313725490196 1" />
+          rgba="0.7 0.7 0.7 1" />
       </material>
     </visual>
     <collision>
@@ -1019,7 +1027,6 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        
         <sphere radius="0.011"/>
       </geometry>
     </collision>
