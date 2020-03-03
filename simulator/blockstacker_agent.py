@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-File:          trainingbot_agent.py
+File:          blockstacker_agent.py
 Author:        Binit Shah 
 Last Modified: Binit on 2/20
 """
@@ -9,34 +9,47 @@ import pybullet as p
 
 from simulator.utilities import Utilities
 
-class TrainingBotAgent:
-    """The TrainingBotAgent class maintains the trainingbot agent"""
-    def __init__(self, motion_delta=0.5, skew=0.0):
+class BlockStackerAgent:
+    """The BlockStackerAgent class maintains the blockstacker agent"""
+    def __init__(self, motion_delta=0.3, skew=0.0):
         """Setups infomation about the agent
         """
-        self.camera_link = 15
-        self.caster_links = [12, 13]
-        self.motor_links = [3, 8]
+        self.camera_links = [6, 8]
+        self.motor_links = [10, 12]
+        self.flywheel_links = [14, 16]
+        self.stepper_link = 1
+        self.button_link = 4
+        self.caster_link = 18
 
         # Differential motor control
         self.max_force = 1
         self.motion_delta = motion_delta
-        self.velocity_limit = 5
+        self.velocity_limit = 4
         self.ltarget_vel, self.rtarget_vel = 0, 0
         self.lskew = abs(skew) + 1 if skew > 0.0 else 1.0
         self.rskew = abs(skew) + 1 if skew < 0.0 else 1.0
 
         self.enabled = False
+        self.blink = 0
+        self.blink_count = 0
 
     def load_urdf(self):
-        """Load the URDF of the trainingbot into the environment
+        """Load the URDF of the blockstacker into the environment
 
-        The trainingbot URDF comes with its own dimensions and
+        The blockstacker URDF comes with its own dimensions and
         textures, collidables.
         """
         # TODO - load closer to the ground, ideally on it.
-        self.robot = p.loadURDF(Utilities.gen_urdf_path("TrainingBot/urdf/TrainingBot.urdf"), [-0.93, 0, 0.1], [0.5, 0.5, 0.5, 0.5], useFixedBase=False)
-        p.setJointMotorControlArray(self.robot, self.caster_links, p.VELOCITY_CONTROL, targetVelocities=[100000, 100000], forces=[0, 0])
+        self.robot = p.loadURDF(Utilities.gen_urdf_path("blockstacker/urdf/blockstacker.urdf"), [0, 0, 0.2], [0, 0, 0.9999383, 0.0111104], useFixedBase=False)
+
+        p.setJointMotorControlMultiDof(self.robot,
+                                       self.caster_link,
+                                       p.POSITION_CONTROL,
+                                       [0, 0, 0],
+                                       targetVelocity=[100000, 100000, 100000],
+                                       positionGain=0,
+                                       velocityGain=1,
+                                       force=[0, 0, 0])
 
     def get_pose(self):
         # TODO - fix orientation
@@ -100,5 +113,14 @@ class TrainingBotAgent:
 
     def step(self):
         p.setJointMotorControlArray(self.robot, self.motor_links, p.VELOCITY_CONTROL,
-                                    targetVelocities=[self.rtarget_vel * self.rskew, self.ltarget_vel * self.lskew] if self.enabled else [0, 0],
+                                    targetVelocities=[-self.rtarget_vel * self.rskew, self.ltarget_vel * self.lskew] if self.enabled else [0, 0],
                                     forces=[self.max_force, self.max_force])
+
+        if not self.enabled:
+            p.changeVisualShape(self.robot, self.button_link, rgbaColor=[1, 1, self.blink, 1])
+            self.blink_count += 1
+            if self.blink_count > 40:
+                self.blink = not self.blink
+                self.blink_count = 0
+        else:
+            p.changeVisualShape(self.robot, self.button_link, rgbaColor=[1, 1, 0, 1])
