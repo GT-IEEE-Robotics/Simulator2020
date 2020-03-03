@@ -4,4 +4,3 @@ pythonvenv/
 .vscode/
 .DS_Store
 *.egg-info
-*.pyc

@@ -14,22 +14,7 @@
       <!-- <contact_cfm value="0.0"/> -->
       <!-- <contact_erp value="1.0"/> -->
     </contact>
-    <!-- We don't need inertial since it is loaded with a fixed base
-         but we add one to remove the warning -->
-    <inertial>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <mass
-        value="0.024" />
-      <inertia
-        ixx="1E-03"
-        ixy="0"
-        ixz="0"
-        iyy="1E-03"
-        iyz="0"
-        izz="1E-03" />
-    </inertial>
+    <!-- We don't need inertial since it is loaded with a fixed base -->
     <!-- Import the visual from a textured .obj -->
     <visual>
       <!-- Center on the origin -->
