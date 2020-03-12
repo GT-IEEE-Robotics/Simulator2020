@@ -75,7 +75,7 @@ class BlockStackerAgent:
 
     def capture_image(self):
         # Camera
-        *_, camera_position, camera_orientation = p.getLinkState(self.robot, self.camera_link)
+        *_, camera_position, camera_orientation = p.getLinkState(self.robot, self.camera_links[0])
         camera_look_position, _ = p.multiplyTransforms(camera_position, camera_orientation, [0,0.1,0], [0,0,0,1])
         view_matrix = p.computeViewMatrix(
           cameraEyePosition=camera_position,

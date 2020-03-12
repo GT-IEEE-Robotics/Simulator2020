@@ -64,7 +64,7 @@ def _sim_server(q, s, sim_config):
         if sim_config.is_interactive_realtime or uncompleted_steps > 0:
             g.step()
             uncompleted_steps -= 1 if uncompleted_steps > 0 else 0
-        if q.qsize() == 0: continue
+        if q.empty(): continue
 
         req_token = q.get()
         if type(req_token) is tuple:
@@ -104,10 +104,10 @@ req_queue = multiprocessing.Queue()
 res_queue = multiprocessing.Queue()
 
 def request(value):
-    while req_queue.qsize() != 0: pass
-    while res_queue.qsize() != 0: pass
+    while not req_queue.empty(): pass
+    while not res_queue.empty(): pass
     req_queue.put(value)
-    while res_queue.qsize() == 0: pass
+    while res_queue.empty(): pass
     return res_queue.get()
 
 def start(config):

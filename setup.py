@@ -16,5 +16,5 @@ setup(
     long_description_content_type='text/markdown',
     python_requires='>=3.5',
     install_requires=['numpy',
-                      'pybullet']
+                      'pybullet>=2.6.6']
 )
